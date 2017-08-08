@@ -1,0 +1,15 @@
+{
+  "name": "Chrome driver Ajax shim",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Chrome driver testing vars to preserve Ajax requests sent status",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/inject/inject.js"
+      ],
+      "run_at":    "document_start"
+    }
+  ]
+}

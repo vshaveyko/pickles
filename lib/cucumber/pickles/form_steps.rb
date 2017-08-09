@@ -94,7 +94,8 @@ Then /^fields are filled with:( within (?:.*))?$/ do |within_block, fields|
 
 end
 
-When /^I select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block = 'body'|
+When /^I select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block = page|
+  pry binding
   within within_block do
     step %{fill select "#{label}" with "#{value}"}
   end

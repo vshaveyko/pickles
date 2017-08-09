@@ -1,4 +1,5 @@
 Transform(/(within .*)$/) do |within_info|
+  pry binding
   within_reg = /["|'](.*)["|']/
 
   splitted = within_info.split('within').reject(&:blank?)

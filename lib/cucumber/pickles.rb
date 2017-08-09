@@ -34,9 +34,7 @@ module Pickles
   end
 
   def blur(node)
-    Capybara.current_session.execute_script("arguments[0].blur()", node)
-
-    Capybara.current_session.find('body').click
+    Capybara.current_session.execute_script("arguments[0].blur();document.body.click()", node)
   end
 
   def pickles_select_input(input, value = nil)
@@ -55,7 +53,7 @@ module Pickles
     #   because element can be hidden or covered by other eement
     #   in which case Selenium raises error
     #
-    Capybara.current_session.execute_script("arguments[0].checked = #{value}; arguments[0].click()", input)
+    Capybara.current_session.execute_script("arguments[0].click();arguments[0].checked = #{value}", input)
   end
 
   unless defined?(SUPPORT_DIR)

@@ -16,7 +16,7 @@ def wait_flags(text)
   [js_wait, text, ajax_wait]
 end
 
-def trigger(text, event)
+def trigger(text, event, within_block)
 
   js_wait, text, ajax_wait = wait_flags(text)
 
@@ -53,7 +53,7 @@ When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within_
   click_text.split(/,|->/).each do |text|
     pry binding if text == 'pry'
 
-    trigger(text, 'click')
+    trigger(text, 'click', within_block)
   end
 
   Waiter.wait_for_ajax
@@ -70,7 +70,7 @@ When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, click_text_tab
   table.rows_hash do |event, text|
     pry binding if event == 'pry'
 
-    trigger(text, event)
+    trigger(text, event, within_block)
   end
 
   Waiter.wait_for_ajax

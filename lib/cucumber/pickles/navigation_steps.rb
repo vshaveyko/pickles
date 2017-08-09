@@ -16,6 +16,21 @@ def wait_flags(text)
   [js_wait, text, ajax_wait]
 end
 
+def trigger(text, event)
+
+  js_wait, text, ajax_wait = wait_flags(text)
+
+  if js_wait
+    syncronize(IndexNodeNotFound) { find_node(text, within: within_block).public_send(event) }
+  else
+    find_node(text, within: within_block).public_send(event)
+  end
+
+  wait_for_ajax if ajax_wait
+
+end
+
+#
 # Use this to click anything anywhere:
 #
 # When I click "My button" - standard click by text
@@ -36,19 +51,26 @@ end
 #
 When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within_block|
   click_text.split(/,|->/).each do |text|
+    pry binding if text == 'pry'
 
-    js_wait, text, ajax_wait = wait_flags(text)
+    trigger(text, 'click')
+  end
 
-    if js_wait
-      syncronize(IndexNodeNotFound) do
-        find_node(text, within: within_block).click
-      end
-    else
-      find_node(text, within: within_block).click
-    end
+  Waiter.wait_for_ajax
+end
 
-    wait_for_ajax if ajax_wait
+#
+# I navigate:
+#   | click | My button   |
+#   | hover | My span     |
+#   | hover | Your span   |
+#   | click | Your button |
+#
+When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, click_text_table|
+  table.rows_hash do |event, text|
+    pry binding if event == 'pry'
 
+    trigger(text, event)
   end
 
   Waiter.wait_for_ajax

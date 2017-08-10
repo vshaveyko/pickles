@@ -21,6 +21,10 @@ module Pickles
     NodeTextLookup.find_node(text, within_block: within)
   end
 
+  def parent(el)
+    el.find(:xpath, '..')
+  end
+
   def find_input(locator, within_block: nil)
     within_block ||= Capybara.current_session
 
@@ -53,7 +57,8 @@ module Pickles
     #   because element can be hidden or covered by other eement
     #   in which case Selenium raises error
     #
-    Capybara.current_session.execute_script("arguments[0].click();arguments[0].checked = #{value}", input)
+    Capybara.current_session.execute_script("arguments[0].click()", parent(input))
+    Capybara.current_session.execute_script("arguments[0].checked = #{value}", input)
   end
 
   unless defined?(SUPPORT_DIR)

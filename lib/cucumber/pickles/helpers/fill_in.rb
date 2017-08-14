@@ -1,6 +1,7 @@
 class Pickles::FillIn
 
-  SELECT_TAG = /^(.+\S+)\s*(?:\(select\))$/
+  SELECT_TAG =      /^(.+\S+)\s*(?:\(select\))$/
+  CONTENTEDITABLE = /^(.+\S+)\s*(?:\(contenteditable\))$/
 
   class << self
     include Pickles
@@ -12,6 +13,13 @@ class Pickles::FillIn
         label = $1
         is_select = true
       end
+
+      if label =~ CONTENTEDITABLE
+        label = $1
+        is_contenteditable = true
+      end
+
+      return _handle_contenteditable(within_block, label, value) if is_contenteditable
 
       input = find_input(label, within_block: within_block)
 
@@ -25,14 +33,14 @@ class Pickles::FillIn
         pickles_attach_file(input, value)
       end
 
-      _handle_select(within_block, label, value) if is_select
-
+      _handle_select(within_block, label, value)          if is_select
       _trigger_blur_event(input)
     end
 
     private
 
     def _handle_select(page, label, value)
+      pry binding if label == 'Allergy'
       Waiter.wait do
         page.find(:xpath,
           ".//*[contains(., '#{label}')][not(*[contains(., '#{label}')])]" \
@@ -40,6 +48,10 @@ class Pickles::FillIn
           "//*[.='#{value}'][not(*[.='#{value}'])]"
         ).click
       end
+    end
+
+    def _handle_contenteditable(page, label, value)
+      page.find(:xpath, "//*[@placeholder='#{label}']").set(value)
     end
 
     def _trigger_blur_event(input)

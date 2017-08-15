@@ -25,7 +25,7 @@ class Pickles::FillIn
 
       case input.native.attribute("type")
 
-      when "text"
+      when "text", 'password', 'email'
         input.set(value)
       when "radio", "checkbox"
         pickles_select_input(input, value)

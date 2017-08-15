@@ -25,13 +25,14 @@ class Pickles::FillIn
 
       case input.native.attribute("type")
 
-      when "text", 'password', 'email'
-        input.set(value)
       when "radio", "checkbox"
         pickles_select_input(input, value)
       when "file"
         pickles_attach_file(input, value)
+      else
+        input.set(value)
       end
+
 
       _handle_select(within_block, label, value)          if is_select
       _trigger_blur_event(input)

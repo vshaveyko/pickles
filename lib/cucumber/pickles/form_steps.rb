@@ -94,7 +94,7 @@ Then /^fields are filled with:( within (?:.*))?$/ do |within_block, fields|
 
 end
 
-When /^I select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block = 'body'|
+When /^(?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block = 'body'|
   within within_block do
     step %{fill select "#{label}" with "#{value}"}
   end
@@ -118,7 +118,7 @@ end
 #   end
 # end
 
-When /^(?:|I )(?:select|unselect) '([^"]*)'( within (?:.*))?$/ do |labels, within_block|
+When /^(?:|I )(?:select|unselect) "([^"]*)"( within (?:.*))?$/ do |labels, within_block|
   labels.split(/\s*\|\s*/).each do |label|
     Pickles::FillIn.invoke(label, nil, within_block)
   end

@@ -26,11 +26,11 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
         current_within = within_block
       end
 
-      FillIN::Factory.new(label, value, current_within).call.call
+      FillIN::Factory.new(label, value, within_block: current_within).call.call
     end
   elsif fields.headers.length == 2
     fields.rows_hash.each do |label, value|
-      FillIN::Factory.new(label, value, within_block).call.call
+      FillIN::Factory.new(label, value, within_block: within_block).call.call
     end
   else
     raise(ArgumentError, 'Unsupported table type. Must contain 2 or 3 columns')
@@ -51,7 +51,7 @@ When /^(?:|I )(?:fill|select|unselect)(select)?(?: "([^"]*)")?(?: with "([^"]*)"
   if is_select
     FillIN::Select.new(label, value, within_block).call
   else
-    FillIN::Factory.new(label, value, within_block).call.call
+    FillIN::Factory.new(label, value, within_block: within_block).call.call
   end
 end
 

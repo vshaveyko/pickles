@@ -66,7 +66,11 @@ module Pickles
   end
 
   def blur(node)
-    Capybara.current_session.execute_script("arguments[0].blur();document.body.click()", node)
+    begin
+      Capybara.current_session.execute_script("arguments[0].blur();document.body.click()", node)
+    rescue StaleElementReferenceError => err
+      "Element: #{node} raised #{err}"
+    end
   end
 
   def pickles_select_input(input, value = nil)

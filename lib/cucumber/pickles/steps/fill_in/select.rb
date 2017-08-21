@@ -19,6 +19,8 @@ class FillIN::Select
     end
 
     blur(input)
+
+    input
   end
 
   private

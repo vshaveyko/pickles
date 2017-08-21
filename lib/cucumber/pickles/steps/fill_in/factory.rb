@@ -1,6 +1,6 @@
 class FillIN::Factory
 
-  TAG = /^(.+\S+)\s*(\(.*\))$/
+  TAG = /^(.+\S+)\s*\((.*)\)$/
 
   def initialize(label, value, within_block: nil)
     @label = label

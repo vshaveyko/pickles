@@ -35,7 +35,7 @@ module Pickles
     NodeTextLookup.find_node(text, within_block: within)
   end
 
-  def parent(el)
+  def parent_node(el)
     el.find(:xpath, '..')
   end
 
@@ -66,11 +66,9 @@ module Pickles
   end
 
   def blur(node)
-    begin
-      Capybara.current_session.execute_script("arguments[0].blur();document.body.click()", node)
-    rescue StaleElementReferenceError => err
-      "Element: #{node} raised #{err}"
-    end
+    Capybara.current_session.execute_script("arguments[0].blur();document.body.click()", node)
+  rescue => err
+    "Element: #{node} raised #{err}"
   end
 
   def pickles_select_input(input, value = nil)
@@ -89,7 +87,7 @@ module Pickles
     #   because element can be hidden or covered by other eement
     #   in which case Selenium raises error
     #
-    Capybara.current_session.execute_script("arguments[0].click()", parent(input))
+    Capybara.current_session.execute_script("arguments[0].click()", parent_node(input))
     Capybara.current_session.execute_script("arguments[0].checked = #{value}", input)
   end
 

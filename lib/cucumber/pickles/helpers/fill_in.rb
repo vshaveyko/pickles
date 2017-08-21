@@ -30,6 +30,7 @@ class Pickles::FillIn
       when "file"
         pickles_attach_file(input, value)
       else
+        # password email tel ...
         input.set(value)
       end
 

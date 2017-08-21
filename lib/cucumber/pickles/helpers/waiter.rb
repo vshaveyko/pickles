@@ -81,12 +81,6 @@ def stub_xml_http_request(page)
       ' -ms-transition-property: none !important;' +
       ' -webkit-transition-property: none !important;' +
       '  transition-property: none !important;' +
-      '/*CSS transforms*/' +
-      '  -o-transform: none !important;' +
-      ' -moz-transform: none !important;' +
-      '   -ms-transform: none !important;' +
-      '  -webkit-transform: none !important;' +
-      '   transform: none !important;' +
       '  /*CSS animations*/' +
       '   -webkit-animation: none !important;' +
       '   -moz-animation: none !important;' +

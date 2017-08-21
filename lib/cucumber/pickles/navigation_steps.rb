@@ -69,6 +69,7 @@ end
 When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, click_text_table|
   table.rows_hash do |event, text|
     pry binding if event == 'pry'
+    event = 'click' if event.strip.blank?
 
     trigger(text, event, within_block)
   end

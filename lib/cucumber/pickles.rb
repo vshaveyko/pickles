@@ -21,6 +21,20 @@ module Pickles
     NodeTextLookup.find_node(text, within_block: within)
   end
 
+  def detect_node(el_alias, text, within_block)
+    within_block ||= Capybara.current_session
+
+    el_alias = el_alias.to_sym
+
+    if xpath = Pickles.config.xpath_node_map[el_alias]
+      return within_block.find(:xpath, xpath, wait: 0)
+    end
+
+    css = Pickles.config.css_node_map[el_alias] || el_alias
+
+    within_block.find(:css, css, text: text, wait: 0)
+  end
+
   def find_input(locator, within_block: nil)
     within_block ||= Capybara.current_session
 
@@ -57,9 +71,15 @@ module Pickles
   end
 
   unless defined?(SUPPORT_DIR)
-    features_dir = caller.select { |path| path =~ /features/ }.first.split('/')
-    2.times { features_dir.pop }
-    SUPPORT_DIR = File.join(features_dir,'support')
+    in_features_dir = caller.select { |path| path =~ /features/ }.first
+
+    if in_features_dir
+      features_dir = in_features_dir.split('/')
+
+      2.times { features_dir.pop }
+
+      SUPPORT_DIR = File.join(features_dir,'support')
+    end
   end
 
   def pickles_attach_file(input, file)
@@ -82,8 +102,6 @@ module Pickles
 
 end
 
-World(Pickles)
-
 require 'cucumber/pickles/config'
 
 # errors
@@ -93,7 +111,9 @@ require_relative 'pickles/errors/index_node_not_found'
 require 'cucumber/pickles/within_transform'
 
 # cucumber steps
-require 'cucumber/pickles/form_steps'
+require 'cucumber/pickles/form/fill'
+require 'cucumber/pickles/form/check'
+
 require 'cucumber/pickles/location_steps'
 require 'cucumber/pickles/navigation_steps'
 
@@ -101,3 +121,13 @@ require 'cucumber/pickles/navigation_steps'
 require 'cucumber/pickles/helpers/waiter'
 require 'cucumber/pickles/helpers/node_text_lookup'
 require 'cucumber/pickles/helpers/fill_in'
+
+require 'cucumber/pickles/steps/fill_in/factory'
+require 'cucumber/pickles/steps/fill_in/input'
+require 'cucumber/pickles/steps/fill_in/select'
+require 'cucumber/pickles/steps/fill_in/complex_input'
+
+require 'cucumber/pickles/steps/check_in/factory'
+require 'cucumber/pickles/steps/check_in/input'
+require 'cucumber/pickles/steps/check_in/select'
+require 'cucumber/pickles/steps/check_in/complex_input'

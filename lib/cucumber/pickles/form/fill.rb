@@ -21,7 +21,7 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
     rows.each do |(within, label, value)|
       case within
       when /\A(.+?)(?: "(.*)")?\Z/
-        current_within = detect_node($1, $2, within_block)
+        current_within = Pickles.detect_node($1, $2, within_block)
       when "-"
         current_within = within_block
       end

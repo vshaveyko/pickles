@@ -33,6 +33,8 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
     rows = fields.rows.unshift(fields.headers)
 
     rows.each do |(within, label, value)|
+      pry binding if label['pry']
+
       case within
       when /\A(.+?)(?: "(.*)")?\Z/
         current_within = detect_node($1, $2, within_block)
@@ -44,6 +46,8 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
     end
   elsif fields.headers.length == 2
     fields.rows_hash.each do |label, value|
+      pry binding if label['pry']
+
       Pickles::FillIn.invoke(label, value, within_block)
     end
   else

@@ -125,7 +125,6 @@ require 'cucumber/pickles/navigation_steps'
 # helpers
 require 'cucumber/pickles/helpers/waiter'
 require 'cucumber/pickles/helpers/node_text_lookup'
-require 'cucumber/pickles/helpers/fill_in'
 
 require 'cucumber/pickles/steps/fill_in/factory'
 require 'cucumber/pickles/steps/fill_in/input'

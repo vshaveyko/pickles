@@ -9,7 +9,7 @@ class FillIN::Factory
   end
 
   def call
-    if value[':']
+    if @value[':']
       step = FillIN::ComplexInput
     elsif @label =~ TAG
       @label = $1

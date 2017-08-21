@@ -41,17 +41,13 @@ When /^(?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, lab
   FillIN::Select.new(label, value, within_block).call
 end
 
-When /^(?:|I )(?:select|unselect) "([^"]*)"( within (?:.*))?$/ do |labels, within_block|
-  labels.split(/\s*\|\s*/).each do |label|
-    FillIN::Input.new(label, nil, within_block).call
-  end
-end
-
-When /^(?:|I )(?:fill|select|unselect)( select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |is_select, label, value, within_block|
+When /^(?:|I )(?:fill|select|unselect)( select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |is_select, labels, value, within_block|
   if is_select
-    FillIN::Select.new(label, value, within_block).call
+    FillIN::Select.new(labels, value, within_block).call
   else
-    FillIN::Factory.new(label, value, within_block: within_block).call.call
+    labels.split(/\s*\|\s*/).each do |label|
+      FillIN::Factory.new(label, value, within_block: within_block).call.call
+    end
   end
 end
 

@@ -4,7 +4,7 @@ class FillIN::Factory
 
   def initialize(label, value, within_block: nil)
     @label = label
-    @value = valuee
+    @value = value
     @within_block = within_block
   end
 

@@ -50,20 +50,20 @@ And(/^I can(not)? see image (".*?")( within (?:.*))?$/) do |is_not, image_src, w
   end
 end
 
-Then /^focus is on "(.*?)"$/ do ||
-  node = find_node(locator, within: page)
-
-  begin
-    block_scroll = page.evaluate_script("document.querySelector('#{selector}').offsetTop")
-  rescue
-    raise ArgumentError, "Element #{locator} does not exist on page"
-  end
-
-  window_height = page.evaluate_script('window.innerHeight') / 2
-
-  synchronize do
-    scrolled = page.evaluate_script('document.body.scrollTop')
-
-    (scrolled <= block_scroll && block_scroll <= scrolled + window_height) || raise(Capybara::ElementNotFound)
-  end
-end
+# Then /^focus is on "(.*?)"$/ do |locator|
+#   node = find_node(locator, within: page)
+#
+#   begin
+#     block_scroll = page.evaluate_script("arguments[0].offsetTop", node)
+#   rescue
+#     raise ArgumentError, "Element #{locator} does not exist on page"
+#   end
+#
+#   window_height = page.evaluate_script('window.innerHeight') / 2
+#
+#   synchronize do
+#     scrolled = page.evaluate_script('document.body.scrollTop')
+#
+#     (scrolled <= block_scroll && block_scroll <= scrolled + window_height) || raise(Capybara::ElementNotFound)
+#   end
+# end

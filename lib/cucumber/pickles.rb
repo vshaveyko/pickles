@@ -115,6 +115,16 @@ require_relative 'pickles/errors/index_node_not_found'
 # cucumber transforms
 require 'cucumber/pickles/within_transform'
 
+require 'cucumber/pickles/steps/fill_in/factory'
+require 'cucumber/pickles/steps/fill_in/input'
+require 'cucumber/pickles/steps/fill_in/select'
+require 'cucumber/pickles/steps/fill_in/complex_input'
+
+require 'cucumber/pickles/steps/check_in/factory'
+require 'cucumber/pickles/steps/check_in/input'
+require 'cucumber/pickles/steps/check_in/select'
+require 'cucumber/pickles/steps/check_in/complex_input'
+
 # cucumber steps
 require 'cucumber/pickles/form/fill'
 require 'cucumber/pickles/form/check'
@@ -125,13 +135,3 @@ require 'cucumber/pickles/navigation_steps'
 # helpers
 require 'cucumber/pickles/helpers/waiter'
 require 'cucumber/pickles/helpers/node_text_lookup'
-
-require 'cucumber/pickles/steps/fill_in/factory'
-require 'cucumber/pickles/steps/fill_in/input'
-require 'cucumber/pickles/steps/fill_in/select'
-require 'cucumber/pickles/steps/fill_in/complex_input'
-
-require 'cucumber/pickles/steps/check_in/factory'
-require 'cucumber/pickles/steps/check_in/input'
-require 'cucumber/pickles/steps/check_in/select'
-require 'cucumber/pickles/steps/check_in/complex_input'

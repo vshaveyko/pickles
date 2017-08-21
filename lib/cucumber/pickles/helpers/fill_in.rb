@@ -58,8 +58,9 @@ class Pickles::FillIn
 
     def _trigger_blur_event(input)
       blur(input)
+    rescue
+      nil
     end
-
 
   end
 

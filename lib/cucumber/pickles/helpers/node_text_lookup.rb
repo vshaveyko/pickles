@@ -12,8 +12,6 @@ class NodeTextLookup
       search_for_node(text, selector, within_block)
     end
 
-    private
-
     #
     # @in
     #   @step_text- step text
@@ -37,6 +35,8 @@ class NodeTextLookup
 
       [text, selector]
     end
+
+    private
 
     #
     # @in

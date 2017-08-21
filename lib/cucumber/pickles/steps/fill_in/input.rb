@@ -15,7 +15,7 @@ class FillIN::Input
       pickles_select_input(input, @value)
     when "file"
       pickles_attach_file(input, @value)
-    else
+    else # password email tel ...
       input.set(@value)
 
     end

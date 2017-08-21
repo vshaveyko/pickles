@@ -43,7 +43,7 @@ module Pickles
     within_block ||= Capybara.current_session
 
     begin
-      xpath = ".//*[contains(text(),'#{locator}')]/ancestor::*[1][.//*[self::input or self::textarea]][1]//*[self::input or self::textarea]"
+      xpath = ".//*[contains(text(),'#{locator}')]/ancestor::*[1][.//*[self::input or self::textarea or self[@contenteditable]]]][1]//*[self::input or self::textarea or self[@contenteditable]]"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
     rescue Capybara::ElementNotFound

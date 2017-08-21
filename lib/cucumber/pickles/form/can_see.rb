@@ -5,15 +5,29 @@
 #   | .note          | Nice guy   |
 #
 Then(/^I can(not)? see:$/) do |is_not, table|
+  if is_not
+    check = -> within, content {
+      within = within.strip.present? ? find_node(within) : page
 
-  table.rows_hash.each do |within, content|
-    within = within.strip.present? ? find_node(within) : page
-
-    if is_not
       expect(within).not_to have_content(content)
-    else
+    }
+  else
+    check = -> within, content {
+      within = within.strip.present? ? find_node(within) : page
+
       expect(within).to have_content(content)
-    end
+    }
+  end
+
+  case table.headers.length
+  when 1
+    check = check.curry['']
+
+    table.raw.flatten.each(&check)
+  when 2
+    table.rows_hash.each(&check)
+  else
+    raise ArgumentError, "Unsupported table format"
   end
 
 end

@@ -122,6 +122,7 @@ require_relative 'pickles/check_in'
 
 # cucumber steps
 require 'cucumber/pickles/form/fill'
+require 'cucumber/pickles/form/can_see'
 require 'cucumber/pickles/form/check'
 
 require 'cucumber/pickles/location_steps'

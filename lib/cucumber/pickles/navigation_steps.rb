@@ -66,7 +66,7 @@ end
 #   | hover | Your span   |
 #   | click | Your button |
 #
-When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, fields|
+When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, table|
   do_click = -> (event, text) do
     pry binding if text['pry']
     event = 'click' if event.strip.blank?
@@ -74,15 +74,15 @@ When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, fields|
     trigger(text, event, within_block)
   end
 
-  case fields.headers.length
+  case table.headers.length
   when 1
     event = 'click'
 
     do_click = do_click.curry[event]
 
-    fields.raw.flatten.each(&do_click)
+    table.raw.flatten.each(&do_click)
   when 2
-    fields.rows_hash.each(&do_click)
+    table.rows_hash.each(&do_click)
   else
     raise ArgumentError, "Unsupported table format"
   end

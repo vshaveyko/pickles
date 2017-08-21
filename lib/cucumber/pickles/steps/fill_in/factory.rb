@@ -19,7 +19,7 @@ class FillIN::Factory
       step = FillIN::Input
     end
 
-    step.new(@label, @value, @within_block).call
+    step.new(@label, @value, @within_block)
   end
 
 end

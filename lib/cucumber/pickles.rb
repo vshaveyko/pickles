@@ -1,3 +1,15 @@
+unless defined?(SUPPORT_DIR)
+  in_features_dir = caller.select { |path| path =~ /features/ }.first
+
+  if in_features_dir
+    features_dir = in_features_dir.split('/')
+
+    2.times { features_dir.pop }
+
+    SUPPORT_DIR = File.join(features_dir,'support')
+  end
+end
+
 # :nodoc:
 module Pickles
 
@@ -12,6 +24,8 @@ module Pickles
     end
 
   end
+
+  module_function
 
   def wait_for_ajax
     Waiter.wait_for_ajax
@@ -43,7 +57,7 @@ module Pickles
     within_block ||= Capybara.current_session
 
     begin
-      xpath = ".//*[contains(text(),'#{locator}')]/ancestor::*[1][.//*[self::input or self::textarea or @contenteditable]]][1]//*[self::input or self::textarea or @contenteditable]"
+      xpath = ".//*[contains(text() ,'#{locator}')]/ancestor::*[.//*[self::input or self::textarea or @contenteditable]][1]//*[self::input or self::textarea or @contenteditable]"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
     rescue Capybara::ElementNotFound
@@ -73,18 +87,6 @@ module Pickles
     #
     Capybara.current_session.execute_script("arguments[0].click()", parent(input))
     Capybara.current_session.execute_script("arguments[0].checked = #{value}", input)
-  end
-
-  unless defined?(SUPPORT_DIR)
-    in_features_dir = caller.select { |path| path =~ /features/ }.first
-
-    if in_features_dir
-      features_dir = in_features_dir.split('/')
-
-      2.times { features_dir.pop }
-
-      SUPPORT_DIR = File.join(features_dir,'support')
-    end
   end
 
   def pickles_attach_file(input, file)

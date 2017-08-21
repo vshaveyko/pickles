@@ -15,7 +15,7 @@ class FillIN::Select
     item_xpath = selector.(text)
 
     Waiter.wait do
-      input.find(:xpath, "./ancestor::*[#{item_xpath}][1]/#{item_xpath}")
+      input.find(:xpath, "./ancestor::*[#{item_xpath}][1]/#{item_xpath}").click
     end
 
     blur(input)

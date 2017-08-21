@@ -47,7 +47,7 @@ When /^(?:|I )(?:select|unselect) "([^"]*)"( within (?:.*))?$/ do |labels, withi
   end
 end
 
-When /^(?:|I )(?:fill|select|unselect)(select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |is_select, label, value, within_block|
+When /^(?:|I )(?:fill|select|unselect)( select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |is_select, label, value, within_block|
   if is_select
     FillIN::Select.new(label, value, within_block).call
   else

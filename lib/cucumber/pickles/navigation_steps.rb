@@ -2,7 +2,7 @@ def wait_flags(text)
   if text.starts_with?('>')
     text = text[1..-1]
 
-    wait_for_ajax
+    Waiter.wait_for_ajax
 
     js_wait = true
   end
@@ -21,12 +21,12 @@ def trigger(text, event, within_block)
   js_wait, text, ajax_wait = wait_flags(text)
 
   if js_wait
-    syncronize(IndexNodeNotFound) { find_node(text, within: within_block).public_send(event) }
+    syncronize(IndexNodeNotFound) { Pickles.find_node(text, within: within_block).public_send(event) }
   else
-    find_node(text, within: within_block).public_send(event)
+    Pickles.find_node(text, within: within_block).public_send(event)
   end
 
-  wait_for_ajax if ajax_wait
+  Waiter.wait_for_ajax if ajax_wait
 
 end
 
@@ -66,12 +66,25 @@ end
 #   | hover | Your span   |
 #   | click | Your button |
 #
-When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, click_text_table|
-  table.rows_hash do |event, text|
+When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, fields|
+  do_click = -> (event, text) do
     pry binding if text['pry']
     event = 'click' if event.strip.blank?
 
     trigger(text, event, within_block)
+  end
+
+  case fields.headers.length
+  when 1
+    event = 'click'
+
+    do_click = do_click.curry[event]
+
+    fields.raw.flatten.each(&do_click)
+  when 2
+    fields.rows_hash.each(&do_click)
+  else
+    raise ArgumentError, "Unsupported table format"
   end
 
   Waiter.wait_for_ajax

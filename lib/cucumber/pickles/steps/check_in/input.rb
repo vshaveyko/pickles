@@ -1,6 +1,7 @@
 class CheckIn::Input
 
-  include Pickles
+  include RSpec::Expectations
+  include RSpec::Matchers
 
   def initialize(label, value, within_block)
     @label = label

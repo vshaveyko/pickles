@@ -26,11 +26,18 @@ Then /^fields are filled with:( within (?:.*))?$/ do |within_block, fields|
         current_within = within_block
       end
 
-      CheckIn::Factory.new(label, value, current_within).call.call
+      if label['pry']
+        label['pry'] = ''
+
+        pry binding
+      end
+
+      CheckIn::Factory.new(label, value, within_block: current_within).call.call
     end
   elsif fields.headers.length == 2
     fields.rows_hash.each do |label, value|
-      CheckIn::Factory.new(label, value, within_block).call.call
+      pry binding if label['pry']
+      CheckIn::Factory.new(label, value, within_block: within_block).call.call
     end
   else
     raise(ArgumentError, 'Unsupported table type. Must contain 2 or 3 columns')

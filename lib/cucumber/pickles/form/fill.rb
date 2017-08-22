@@ -26,10 +26,17 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
         current_within = within_block
       end
 
+      if label['pry']
+        label['pry'] = ''
+
+        pry binding
+      end
+
       FillIN::Factory.new(label, value, within_block: current_within).call.call
     end
   elsif fields.headers.length == 2
     fields.rows_hash.each do |label, value|
+      pry binding if label['pry']
       FillIN::Factory.new(label, value, within_block: within_block).call.call
     end
   else

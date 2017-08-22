@@ -53,6 +53,14 @@ module Pickles
     within_block.find(:css, css, text: text, wait: 0)
   end
 
+  #
+  # find by *anything* for input fields
+  #
+  # cases handled:
+  #  1. label or span(as label) with input hint for input || textarea || @contenteditable
+  #  2. capybara lookup by label || plcaeholder || id || name || etc
+  #  3. @contenteditable with @plcaholder = @locator
+  #
   def find_input(locator, within_block: nil)
     within_block ||= Capybara.current_session
 

@@ -72,7 +72,7 @@ module Pickles
       begin
         within_block.find(:fillable_field, locator, wait: 0, visible: false)
       rescue Capybara::ElementNotFound # contenteditable
-        xpath = ".//*[@contenteditable and (@placeholder='#{locator}' or name='#{locatorl}')]"
+        xpath = ".//*[@contenteditable and (@placeholder='#{locator}' or name='#{locator}')]"
 
         within_block.find(:xpath, xpath, wait: 0, visible: false)
       end

@@ -21,7 +21,7 @@ def trigger(text, event, within_block)
   js_wait, text, ajax_wait = wait_flags(text)
 
   if js_wait
-    syncronize(IndexNodeNotFound) { Pickles.find_node(text, within: within_block).public_send(event) }
+    Pickles.syncronize { Pickles.find_node(text, within: within_block).public_send(event) }
   else
     Pickles.find_node(text, within: within_block).public_send(event)
   end

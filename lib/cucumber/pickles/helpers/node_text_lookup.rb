@@ -50,7 +50,7 @@ class NodeTextLookup
     def search_for_node(text, selector, within_block)
       text, index_xpath = Artifact::Index.execute(text, '')
 
-      xpath = "#{selector.(text)}#{index_xpath}"
+      xpath = "(#{selector.(text)})#{index_xpath}"
 
       within_block.find(:xpath, xpath)
     end

@@ -15,15 +15,26 @@ module Helpers::Main
   def detect_node(el_alias, text, within_block)
     within_block ||= Capybara.current_session
 
+    is_index_reg = /(.*)?\[(.*)\]/
+
+    if index_matches = is_index_reg.match(text)
+      text = index_matches.captures[0]
+      index = index_matches.captures[1].to_i - 1
+    end
+
     el_alias = el_alias.to_sym
 
     if xpath = Pickles.config.xpath_node_map[el_alias]
-      return within_block.find(:xpath, xpath, wait: 0)
+      search_params = [:xpath, xpath, wait: 0]
+    elsif css = Pickles.config.css_node_map[el_alias] || el_alias
+      search_params = [:css, css, text: text, wait: 0]
     end
 
-    css = Pickles.config.css_node_map[el_alias] || el_alias
-
-    within_block.find(:css, css, text: text, wait: 0)
+    if index_matches
+      within_block.all(*search_params)[index]
+    else
+      within_block.find(*search_params)
+    end
   end
 
   #
@@ -47,6 +58,9 @@ module Helpers::Main
       xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath} and position()=1]//#{inputtable_field_xpath}"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
+    # Capybara::Ambiguous < Capybara::ElementNotFound == true
+    rescue Capybara::Ambiguous => err
+      raise err
     rescue Capybara::ElementNotFound
       begin
         within_block.find(:fillable_field, locator, wait: 0, visible: false)
@@ -101,7 +115,7 @@ module Helpers::Main
 
     errors << Capybara::ElementNotFound if errors.empty?
 
-    page.document.synchronize(Capybara.default_max_wait_time, errors: errors) do
+    Capybara.current_session.document.synchronize(Capybara.default_max_wait_time, errors: errors) do
       yield
     end
   end

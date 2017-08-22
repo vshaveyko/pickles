@@ -37,12 +37,12 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
   end
 end
 
-When /^(?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block|
-  FillIN::Select.new(label, value, within_block).call
-end
+# When /^(?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block|
+#   FillIN::Select.new(label, value, within_block).call
+# end
 
-When /^(?:|I )(?:fill|select|unselect)( select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |is_select, labels, value, within_block|
-  if is_select
+When /^(?:|I )(fill|select|unselect)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |type, labels, value, within_block|
+  if type == 'select'
     FillIN::Select.new(labels, value, within_block).call
   else
     labels.split(/\s*\|\s*/).each do |label|

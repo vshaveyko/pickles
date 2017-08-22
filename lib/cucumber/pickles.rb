@@ -61,20 +61,29 @@ module Pickles
   #  2. capybara lookup by label || plcaeholder || id || name || etc
   #  3. @contenteditable with @plcaholder = @locator
   #
-  def find_input(locator, within_block: nil)
+  def find_input(input_locator, within_block: nil)
     within_block ||= Capybara.current_session
 
+    locator, selector = NodeTextLookup.lookup_values(input_locator)
+
     begin
-      xpath = ".//*[contains(text() ,'#{locator}')]/ancestor::*[.//*[self::input or self::textarea or @contenteditable]][1]//*[self::input or self::textarea or @contenteditable]"
+      label_xpath = selector.(locator)
+      inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
+
+      xpath = "#{label_xpath}/ancestor::*[.//#{inputtable_field_xpath}][1]//#{inputtable_field_xpath}"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
     rescue Capybara::ElementNotFound
       begin
         within_block.find(:fillable_field, locator, wait: 0, visible: false)
       rescue Capybara::ElementNotFound # contenteditable
-        xpath = ".//*[@contenteditable and (@placeholder='#{locator}' or name='#{locator}')]"
+        begin
+          xpath = ".//*[@contenteditable and (@placeholder='#{locator}' or name='#{locator}')]"
 
-        within_block.find(:xpath, xpath, wait: 0, visible: false)
+          within_block.find(:xpath, xpath, wait: 0, visible: false)
+        rescue Capybara::ElementNotFound # TODO: nicer error
+          raise Capybara::ElementNotFound, "Unable to find fillable field by locator #{locator}"
+        end
       end
     end
   end

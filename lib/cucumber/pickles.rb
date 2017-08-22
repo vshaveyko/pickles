@@ -38,6 +38,7 @@ require 'cucumber/pickles/form/check'
 require 'cucumber/pickles/location_steps'
 require 'cucumber/pickles/navigation_steps'
 
-# helpers
+require 'cucumber/pickles/artifact'
+
 require 'cucumber/pickles/helpers/waiter'
 require 'cucumber/pickles/helpers/node_text_lookup'

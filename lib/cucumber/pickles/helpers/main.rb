@@ -9,7 +9,7 @@ module Helpers::Main
   end
 
   def parent_node(el)
-    el.find(:xpath, '..')
+    el.find(:xpath, '..', wait: 0, visible: false)
   end
 
   def detect_node(el_alias, text, within_block)
@@ -44,7 +44,7 @@ module Helpers::Main
       label_xpath = selector.(locator)
       inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
 
-      xpath = "#{label_xpath}/ancestor::*[.//#{inputtable_field_xpath}][1]//#{inputtable_field_xpath}#{index_xpath}"
+      xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath}][1]//#{inputtable_field_xpath}"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
     rescue Capybara::ElementNotFound

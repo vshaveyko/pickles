@@ -18,7 +18,7 @@ class FillIN::Select
       input.find(:xpath, "./ancestor::*[#{item_xpath}][1]/#{item_xpath}").click
     end
 
-    blur(input)
+    Pickles.blur(input)
 
     input
   end

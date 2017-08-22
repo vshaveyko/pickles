@@ -10,9 +10,9 @@ class FillIN::Input
     case input.native.attribute("type")
 
     when "radio", "checkbox"
-      pickles_select_input(input, @value)
+      Pickles.pickles_select_input(input, @value)
     when "file"
-      pickles_attach_file(input, @value)
+      Pickles.pickles_attach_file(input, @value)
     else # password email tel ...
       input.set(@value)
 

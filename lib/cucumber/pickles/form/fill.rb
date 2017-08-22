@@ -42,7 +42,7 @@ end
 # end
 
 When /^(?:|I )(fill|select|unselect)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |type, labels, value, within_block|
-  if type == 'select'
+  if type == 'select' && value.present?
     FillIN::Select.new(labels, value, within_block).call
   else
     labels.split(/\s*\|\s*/).each do |label|

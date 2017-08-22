@@ -1,18 +1,18 @@
 require 'spec_helper'
 
+require 'cucumber/pickles/fill_in'
+require 'cucumber/pickles/check_in'
+
 RSpec.describe '#CheckIn::Factory' do
 
   class NewCoolStep
-    def call
-    end
+    def initialize(*); end
   end
 
-  before(:suite) do
-    Pickles.configure do |config|
-      config.check_tag_steps_map = {
-        new_cool_step: NewCoolStep
-      }
-    end
+  Pickles.configure do |config|
+    config.check_tag_steps_map = {
+      'new_cool_step' => NewCoolStep
+    }
   end
 
   it 'uses custom step if label demands it' do
@@ -20,7 +20,7 @@ RSpec.describe '#CheckIn::Factory' do
 
     step = CheckIn::Factory.new(label, nil).call
 
-    expect(step).to be_instance_of(CheckIn::Input)
+    expect(step).to be_instance_of(NewCoolStep)
   end
 
   it 'uses input step if custom step required but not defined' do
@@ -28,7 +28,7 @@ RSpec.describe '#CheckIn::Factory' do
 
     step = CheckIn::Factory.new(label, nil).call
 
-    expect(step).to be_instance_of(NewCoolStep)
+    expect(step).to be_instance_of(CheckIn::Input)
   end
 
   it 'uses complex input step if value has :' do

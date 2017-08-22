@@ -30,6 +30,7 @@ class NodeTextLookup
         #
         # find node that contains *text* and does not have any child nodes that contain *text*
         #
+
         selector = proc { |text| ".//*[contains(., '#{text}')][not(*[contains(., '#{text}')])]" }
       end
 
@@ -47,18 +48,11 @@ class NodeTextLookup
     #   node = capybara node
     #
     def search_for_node(text, selector, within_block)
-      index_matches = INDEX_REGEX.match(text)
+      text, index_xpath = Artifact::Index.execute(text, '')
 
-      if index_matches
-        index = index_matches.captures[1].to_i
-        text = index_matches.captures[0]
+      xpath = "#{selector.(text)}#{index_xpath}"
 
-        all = within_block.all(:xpath, selector.call(text))
-
-        all[index] || raise(IndexNodeNotFound.new(text, index, all), nil, caller)
-      else
-        within_block.find(:xpath, selector.call(text))
-      end
+      within_block.find(:xpath, xpath)
     end
 
   end

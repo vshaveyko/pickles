@@ -1,3 +1,17 @@
+module Pickles
+
+  class << self
+    def configure
+      yield config
+    end
+
+    def config
+      @_configuration ||= Pickles::Config.new
+    end
+  end
+
+end
+
 class Pickles::Config
 
   attr_accessor :css_node_map, :xpath_node_map

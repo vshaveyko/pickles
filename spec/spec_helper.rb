@@ -8,7 +8,7 @@ require 'pry'
 require 'capybara/spec/test_app'
 
 require 'selenium-webdriver'
-require 'cucumber/pickles'
+require 'cucumber/pickles/config'
 
 Capybara.register_driver :selenium_chrome_clear_storage do |app|
   chrome_options = {

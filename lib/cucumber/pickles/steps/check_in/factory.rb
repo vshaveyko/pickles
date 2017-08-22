@@ -4,12 +4,12 @@ class CheckIn::Factory
 
   def initialize(label, value, within_block: nil)
     @label = label
-    @value = valuee
+    @value = value
     @within_block = within_block
   end
 
   def call
-    if value[':']
+    if !@value.nil? && @value[':']
       step = CheckIn::ComplexInput
       # return if text_complex_input(label, value, within_block)
     elsif @label =~ TAG

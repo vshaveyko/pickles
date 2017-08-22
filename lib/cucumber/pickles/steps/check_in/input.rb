@@ -29,7 +29,7 @@ class CheckIn::Input
   private
 
   def input
-    @input ||= find_input(@label, within_block: @within_block)
+    @input ||= Pickles.find_input(@label, within_block: @within_block)
   end
 
 end

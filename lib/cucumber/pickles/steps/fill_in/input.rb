@@ -1,7 +1,5 @@
 class FillIN::Input
 
-  include Pickles
-
   def initialize(label, value, within_block)
     @label = label
     @value = value
@@ -26,7 +24,7 @@ class FillIN::Input
   private
 
   def input
-    @input ||= find_input(@label, within_block: @within_block)
+    @input ||= Pickles.find_input(@label, within_block: @within_block)
   end
 
 end

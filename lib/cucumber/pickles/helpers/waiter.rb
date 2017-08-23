@@ -66,7 +66,7 @@ def stub_xml_http_request(page)
               window.activeRequests--;
 
               #{
-                if Pickles::Config.log_xhr_response
+                if Pickles.config.log_xhr_response
                   <<-LOG
                   if (parseInt(this.status, 10) >= 400) {
                     console.error("############## ERRRO RESPONSE START ################");

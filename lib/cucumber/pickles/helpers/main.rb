@@ -55,12 +55,14 @@ module Helpers::Main
       label_xpath = selector.(locator)
       inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
 
-      xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath} and position()=1]//#{inputtable_field_xpath}"
+      xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath}][position()=1]//#{inputtable_field_xpath}"
 
       within_block.find(:xpath, xpath, wait: 0, visible: false)
     # Capybara::Ambiguous < Capybara::ElementNotFound == true
     rescue Capybara::Ambiguous => err
-      raise err
+      all_matches = within_block.all(:xpath, xpath, wait: 0, visible: false)
+
+      raise "Capybara::Ambiguous(locator: #{locator}): #{all_matches.inspect}"
     rescue Capybara::ElementNotFound
       begin
         within_block.find(:fillable_field, locator, wait: 0, visible: false)

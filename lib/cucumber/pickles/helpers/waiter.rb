@@ -65,11 +65,18 @@ def stub_xml_http_request(page)
             if (this.readyState == 4) {
               window.activeRequests--;
 
-              if (parseInt(this.status, 10) >= 400) {
-                console.error("############## ERRRO RESPONSE START ################");
-                console.error(this.response);
-                console.error("############## ERRRO RESPONSE END   ################");
+              #{
+                if Pickles::Config.log_xhr_response
+                  <<-LOG
+                  if (parseInt(this.status, 10) >= 400) {
+                    console.error("############## ERRRO RESPONSE START ################");
+                    console.error(this.response);
+                    console.error("############## ERRRO RESPONSE END   ################");
+                  }
+                  LOG
+                end
               }
+
             }
           }, false);
         oldOpen.call(this, method, url, async, user, pass);

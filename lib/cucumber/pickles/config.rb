@@ -14,10 +14,11 @@ end
 
 class Pickles::Config
 
-  attr_accessor :css_node_map, :xpath_node_map
+  attr_accessor :css_node_map, :xpath_node_map, :log_xhr_response
 
   def initialize
     @css_node_map = {}
+    @log_xhr_response = false
     @xpath_node_map = {}
     @fill_tag_steps_map = { 'select' => FillIN::Select }
     @check_tag_steps_map = { 'text' => CheckIn::Text }

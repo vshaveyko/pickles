@@ -13,6 +13,8 @@
 # | Due date             | 12:35      |
 Then /^fields are filled with:( within (?:.*))?$/ do |within_block, fields|
 
+  Waiter.wait_for_ajax
+
   if fields.headers.length == 3
     current_within = within_block
 

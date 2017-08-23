@@ -13,6 +13,9 @@
 # |                 | radio 1              | true       |
 #
 When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields|
+
+  Waiter.wait_for_ajax
+
   if fields.headers.length == 3
     current_within = within_block
 
@@ -42,6 +45,7 @@ When /^(?:|I )fill in the following:( within (?:.*))?$/ do |within_block, fields
   else
     raise(ArgumentError, 'Unsupported table type. Must contain 2 or 3 columns')
   end
+
 end
 
 # When /^(?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?$/ do |value, label, within_block|

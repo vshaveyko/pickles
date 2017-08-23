@@ -100,7 +100,8 @@ module Helpers::Main
     #   because element can be hidden or covered by other eement
     #   in which case Selenium raises error
     #
-    Capybara.current_session.execute_script("arguments[0].click()", parent_node(input))
+    click_element(parent_node(input))
+
     Capybara.current_session.execute_script("arguments[0].checked = #{value}", input)
   end
 
@@ -120,6 +121,10 @@ module Helpers::Main
     Capybara.current_session.document.synchronize(Capybara.default_max_wait_time, errors: errors) do
       yield
     end
+  end
+
+  def click_element(capybara_node)
+    Capybara.current_session.execute_script("arguments[0].click()", capybara_node)
   end
 
 end

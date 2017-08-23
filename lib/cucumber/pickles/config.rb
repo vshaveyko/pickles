@@ -20,7 +20,7 @@ class Pickles::Config
     @css_node_map = {}
     @xpath_node_map = {}
     @fill_tag_steps_map = { 'select' => FillIN::Select }
-    @check_tag_steps_map = {}
+    @check_tag_steps_map = { 'text' => CheckIn::Text }
   end
 
   def css_node_map=(map)

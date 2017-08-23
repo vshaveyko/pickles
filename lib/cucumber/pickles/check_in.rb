@@ -4,7 +4,7 @@ module CheckIn
 
   autoload :Factory, _dir + 'factory'
   autoload :Input, _dir + 'input'
-  autoload :Select, _dir + 'select'
+  autoload :Text, _dir + 'text'
   autoload :ComplexInput, _dir + 'complex_input'
 
 end

@@ -57,15 +57,19 @@ def stub_xml_http_request(page)
       if (window.ajaxRequestIsSet) { return; };
       window.ajaxRequestIsSet = true;
 
-      console.log(angular);
-
       var oldOpen = XMLHttpRequest.prototype.open;
       window.activeRequests =  0;
       XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
         window.activeRequests++;
         this.addEventListener("readystatechange", function() {
-            if(this.readyState == 4) {
+            if (this.readyState == 4) {
               window.activeRequests--;
+
+              if (parseInt(this.status, 10) >= 400) {
+                console.error("############## ERRRO RESPONSE START ################");
+                console.error(this.response);
+                console.error("############## ERRRO RESPONSE END   ################");
+              }
             }
           }, false);
         oldOpen.call(this, method, url, async, user, pass);

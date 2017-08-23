@@ -1,7 +1,5 @@
 class FillIN::Select
 
-  include Pickles
-
   def initialize(label, value, within_block)
     @label = label
     @value = value
@@ -19,6 +17,8 @@ class FillIN::Select
     end
 
     Pickles.blur(input)
+
+    Waiter.wait_for_ajax
 
     input
   end

@@ -57,15 +57,26 @@ def stub_xml_http_request(page)
       if (window.ajaxRequestIsSet) { return; };
       window.ajaxRequestIsSet = true;
 
-      console.log(angular);
-
       var oldOpen = XMLHttpRequest.prototype.open;
       window.activeRequests =  0;
       XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
         window.activeRequests++;
         this.addEventListener("readystatechange", function() {
-            if(this.readyState == 4) {
+            if (this.readyState == 4) {
               window.activeRequests--;
+
+              #{
+                if Pickles.config.log_xhr_response
+                  <<-LOG
+                  if (parseInt(this.status, 10) >= 400) {
+                    console.error("############## ERRRO RESPONSE START ################");
+                    console.error(this.response);
+                    console.error("############## ERRRO RESPONSE END   ################");
+                  }
+                  LOG
+                end
+              }
+
             }
           }, false);
         oldOpen.call(this, method, url, async, user, pass);
@@ -81,12 +92,6 @@ def stub_xml_http_request(page)
       ' -ms-transition-property: none !important;' +
       ' -webkit-transition-property: none !important;' +
       '  transition-property: none !important;' +
-      '/*CSS transforms*/' +
-      '  -o-transform: none !important;' +
-      ' -moz-transform: none !important;' +
-      '   -ms-transform: none !important;' +
-      '  -webkit-transform: none !important;' +
-      '   transform: none !important;' +
       '  /*CSS animations*/' +
       '   -webkit-animation: none !important;' +
       '   -moz-animation: none !important;' +
@@ -112,6 +117,7 @@ module Capybara
 
   end
 end
+
 module Waiter
 
   module_function
@@ -130,6 +136,9 @@ module Waiter
     Capybara.current_session
   end
 
+  #
+  # waits for all Ajax requests to finish
+  #
   def wait_for_ajax
     page.document.synchronize do
       pending_ajax_requests_num.zero? || raise(Capybara::ElementNotFound)

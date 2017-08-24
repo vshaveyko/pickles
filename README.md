@@ -7,7 +7,7 @@ This gem contains some helpers to simplify testing with capybara along with afew
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pickles', git: 'https://github.com/vshaveyko/pickles'
+gem 'pickles'
 ```
 
 And then execute:
@@ -19,47 +19,6 @@ Or install it yourself as:
     $ gem install pickles
 
 # Usage
-
-## Capybara helpers
-  ##### find_node(locator, within: nil)
-    
-    Find node on page by locator string
-
-    Locator string: `"=Text[2]"`:
-      + 'Text' - required - text to look up by
-      + '='    - optional - lookup exact text in node if given
-      + '[2]'  - optional - index of element on page. If found 4 elements than 3rd will be selected - indexed from 0. 
-
-    within - capybara node to limit lookup
-
-    returns: capybara node
-
-  ##### find_input(locator, within: nil)
-
-    Find inputtable node on page by locator string ( for definition of locator string see [find_node](#find_nodelocator-within-nil) )
-
-    inputtable means: `input | textarea | [contenteditable]`
-
-  ##### wait_for_ajax
-    
-    Waits for ajax requests to end before proceeding further.
-    Terminated with `Capybara::ElementNotFound` after `Capybara.default_wait_time` seconds
-
-  ##### blur(node)
-    
-    Triggers *node* blur event and clicks on body to perform blur
-
-  ##### pickles_select_input(input, value = nil)
-
-    Selects *input*[type="checkbox"] OR *input*[type="radio"] on form
-
-    Triggers click after selection to trigger javascript events ( may change in future )
-
-  ##### pickles_attach_file(input, file_name)
-
-    Attaches file with *file_name* to *input*[type="file"]
-
-    *file_name* is fetched from `features/support/attachments/*file_name*` and raises RuntimeError if file not found
 
 ## Supported cucumber steps:
 
@@ -180,7 +139,7 @@ Or install it yourself as:
          ##### Description:
            + Attaches given file to identified fields
            + Params:
-             1. relative file name. see pickles_attach_file
+             1. relative file name. see attach_file
              2. file input identifier. see [find_node](#find_nodelocator-within-nil)
              3. within block identifier. see [find_node](#find_nodelocator-within-nil)
             

@@ -2,7 +2,7 @@ def wait_flags(text)
   if text.starts_with?('>')
     text = text[1..-1]
 
-    wait_for_ajax
+    Waiter.wait_for_ajax
 
     js_wait = true
   end
@@ -16,17 +16,17 @@ def wait_flags(text)
   [js_wait, text, ajax_wait]
 end
 
-def trigger(text, event, within_block)
+def trigger(text, event, within)
 
   js_wait, text, ajax_wait = wait_flags(text)
 
   if js_wait
-    syncronize(IndexNodeNotFound) { find_node(text, within: within_block).public_send(event) }
+    Waiter.wait { Pickles.find_node(text, within: within).public_send(event) }
   else
-    find_node(text, within: within_block).public_send(event)
+    Pickles.find_node(text, within: within).public_send(event)
   end
 
-  wait_for_ajax if ajax_wait
+  Waiter.wait_for_ajax if ajax_wait
 
 end
 
@@ -49,11 +49,11 @@ end
 #
 # etc.
 #
-When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within_block|
+When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within|
   click_text.split(/,|->/).each do |text|
-    pry binding if text == 'pry'
+    pry binding if text['pry']
 
-    trigger(text, 'click', within_block)
+    trigger(text, 'click', within)
   end
 
   Waiter.wait_for_ajax
@@ -66,11 +66,25 @@ end
 #   | hover | Your span   |
 #   | click | Your button |
 #
-When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, click_text_table|
-  table.rows_hash do |event, text|
-    pry binding if event == 'pry'
+When /^I (?:click|navigate):( within (?:.*))?$/ do |within, table|
+  do_click = -> (event, text) do
+    pry binding if text['pry']
+    event = 'click' if event.strip.blank?
 
-    trigger(text, event, within_block)
+    trigger(text, event, within)
+  end
+
+  case table.headers.length
+  when 1
+    event = 'click'
+
+    do_click = do_click.curry[event]
+
+    table.raw.flatten.each(&do_click)
+  when 2
+    table.rows_hash.each(&do_click)
+  else
+    raise ArgumentError, "Unsupported table format"
   end
 
   Waiter.wait_for_ajax

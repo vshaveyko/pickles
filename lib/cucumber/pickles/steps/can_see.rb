@@ -4,6 +4,7 @@
 #   | body           | 2009-11-01 |
 #   | .note          | Nice guy   |
 #
+
 Then(/^I can(not)? see:$/) do |is_not, table|
   if is_not
     check = -> within, content {
@@ -32,21 +33,21 @@ Then(/^I can(not)? see:$/) do |is_not, table|
 
 end
 
-And(/^I can(not)? see video (".*?")( within (?:.*))?$/) do |is_not, video_src, within_block|
-  within_block ||= page
+And(/^I can(not)? see video (".*?")( within (?:.*))?$/) do |is_not, video_src, within|
+  within ||= page
   if is_not
-    expect(within_block).not_to have_selector("iframe[src=#{video_src}]")
+    expect(within).not_to have_selector("iframe[src=#{video_src}]")
   else
-    expect(within_block).to have_selector("iframe[src=#{video_src}]")
+    expect(within).to have_selector("iframe[src=#{video_src}]")
   end
 end
 
-And(/^I can(not)? see image (".*?")( within (?:.*))?$/) do |is_not, image_src, within_block|
-  within_block ||= page
+And(/^I can(not)? see image (".*?")( within (?:.*))?$/) do |is_not, image_src, within|
+  within ||= page
   if is_not
-    expect(within_block).not_to have_selector("img[src=#{image_src}]")
+    expect(within).not_to have_selector("img[src=#{image_src}]")
   else
-    expect(within_block).to have_selector("img[src=#{image_src}]")
+    expect(within).to have_selector("img[src=#{image_src}]")
   end
 end
 

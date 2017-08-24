@@ -14,6 +14,8 @@ end
 
 class Pickles::Config
 
+  using HashSymbolizeKeys
+
   attr_accessor :css_node_map, :xpath_node_map, :log_xhr_response
 
   def initialize
@@ -27,13 +29,13 @@ class Pickles::Config
   def css_node_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @css_node_map = map.with_indifferent_access
+    @css_node_map = map.symbolize_keys
   end
 
   def xpath_node_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @xpath_node_map = map.with_indifferent_access
+    @xpath_node_map = map.symbolize_keys
   end
 
   def fill_tag_steps_map=(map)

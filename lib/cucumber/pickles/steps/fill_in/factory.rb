@@ -2,10 +2,10 @@ class FillIN::Factory
 
   TAG = /^(.+\S+)\s*\((.*)\)$/
 
-  def initialize(label, value, within_block: nil)
+  def initialize(label, value, within: nil)
     @label = label
     @value = value
-    @within_block = within_block
+    @within = within
   end
 
   def call
@@ -19,7 +19,7 @@ class FillIN::Factory
       step = FillIN::Input
     end
 
-    step.new(@label, @value, @within_block)
+    step.new(@label, @value, @within)
   end
 
 end

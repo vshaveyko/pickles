@@ -117,6 +117,7 @@ module Capybara
 
   end
 end
+
 module Waiter
 
   module_function
@@ -135,6 +136,9 @@ module Waiter
     Capybara.current_session
   end
 
+  #
+  # waits for all Ajax requests to finish
+  #
   def wait_for_ajax
     page.document.synchronize do
       pending_ajax_requests_num.zero? || raise(Capybara::ElementNotFound)

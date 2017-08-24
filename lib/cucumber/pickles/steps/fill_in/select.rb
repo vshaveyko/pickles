@@ -1,13 +1,13 @@
 class FillIN::Select
 
-  def initialize(label, value, within_block)
+  def initialize(label, value, within)
     @label = label
     @value = value
-    @within_block = within_block || Capybara.current_session
+    @within = within || Capybara.current_session
   end
 
   def call
-    input = FillIN::Input.new(@label, @value, @within_block).call
+    input = FillIN::Input.new(@label, @value, @within).call
 
     text, selector = NodeTextLookup.lookup_values(value)
     item_xpath = selector.(text)

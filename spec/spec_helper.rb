@@ -8,31 +8,23 @@ require 'pry'
 require 'capybara/spec/test_app'
 
 require 'selenium-webdriver'
-require 'cucumber/pickles/config'
+require 'cucumber/pickles/helpers'
 
 Capybara.register_driver :selenium_chrome_clear_storage do |app|
   chrome_options = {
     browser: :chrome,
-    options: ::Selenium::WebDriver::Chrome::Options.new()
+    options: ::Selenium::WebDriver::Chrome::Options.new.tap { |options| options.args << 'headless' },
+    clear_local_storage: true,
+    clear_session_storage: true,
   }
 
-  chrome_options[:options].args << 'headless'
-
-  Capybara::Selenium::Driver.new(app, chrome_options.merge(clear_local_storage: true, clear_session_storage: true))
+  Capybara::Selenium::Driver.new(app, chrome_options)
 end
 
 Capybara.app = TestApp
-Capybara.current_driver = :selenium_chrome_clear_storage
-Capybara.javascript_driver = :selenium_chrome_clear_storage
 
-#
-# Capybara.register_driver :rack_test do |app|
-#   Capybara::RackTest::Driver.new(app, headers: { 'HTTP_USER_AGENT' => 'Capybara' })
-# end
+Capybara.javascript_driver = Capybara.current_driver = :selenium_chrome_clear_storage
 
-# def capybara_session
-#   @capybara_session ||= Capybara::Session.new(:selenium_chrome_clear_storage, TestApp)
-# end
 RSpec.configure do |config|
   config.before(:all) do
     @session = Capybara.current_session

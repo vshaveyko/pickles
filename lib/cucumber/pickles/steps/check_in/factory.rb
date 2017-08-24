@@ -2,16 +2,16 @@ class CheckIn::Factory
 
   TAG = /^(.+\S+)\s*\((.*)\)$/
 
-  def initialize(label, value, within_block: nil)
+  def initialize(label, value, within: nil)
     @label = label
     @value = value
-    @within_block = within_block
+    @within = within
   end
 
   def call
     if !@value.nil? && @value[':']
       step = CheckIn::ComplexInput
-      # return if text_complex_input(label, value, within_block)
+      # return if text_complex_input(label, value, within)
     elsif @label =~ TAG
       @label = $1
       tag = $2
@@ -20,7 +20,7 @@ class CheckIn::Factory
       step = CheckIn::Input
     end
 
-    step.new(@label, @value, @within_block)
+    step.new(@label, @value, @within)
   end
 
 end

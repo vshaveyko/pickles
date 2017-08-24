@@ -3,10 +3,10 @@ class CheckIn::Input
   include RSpec::Expectations
   include RSpec::Matchers
 
-  def initialize(label, value, within_block)
+  def initialize(label, value, within)
     @label = label
     @value = value
-    @within_block = within_block || Capybara.current_session
+    @within = within || Capybara.current_session
   end
 
   def call
@@ -30,7 +30,7 @@ class CheckIn::Input
   private
 
   def input
-    @input ||= Pickles.find_input(@label, within_block: @within_block)
+    @input ||= Pickles.find_input(@label, within: @within)
   end
 
 end

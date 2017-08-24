@@ -2,17 +2,17 @@ class FillIN::ComplexInput
 
   include Pickles
 
-  def initialize(label, value, within_block)
+  def initialize(label, value, within)
     @label = label
     @value = value
-    @within_block = within_block || Capybara.current_session
+    @within = within || Capybara.current_session
   end
 
   def call
     @value.split(/\s*:\s*/).each.with_index do |value, index|
       input_locator = "#{label}[#{index}]"
 
-      FillIN::Input.new(input_locator, value, @within_block)
+      FillIN::Input.new(input_locator, value, @within)
     end
   end
 

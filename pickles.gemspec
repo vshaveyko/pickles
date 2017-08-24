@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
 
   s.add_dependency 'capybara', '>= 1.1.2'
-  s.add_dependency 'cucumber', '>= 1.1.1'
 
   s.require_paths = ["lib"]
 

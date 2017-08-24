@@ -7,7 +7,7 @@ This gem contains some helpers to simplify testing with capybara along with afew
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pickles', git: 'https://github.com/vshaveyko/pickles'
+gem 'pickles'
 ```
 
 And then execute:

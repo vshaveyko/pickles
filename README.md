@@ -24,10 +24,7 @@ Or install it yourself as:
 
 + Navigation 
 
-  1. 
-      ```rb  
-      When I (?:click|navigate) "([^"]*)"( within (?:.*))? 
-      ```
+  1.  I (?:click|navigate) "([^"]*)"( within (?:.*))? 
 
       ##### Examples:
       ```rb
@@ -53,10 +50,7 @@ Or install it yourself as:
       ##### Description:
         + for within checkout docs
 
-  2. 
-     ```rb 
-     I (?:click|navigate):( within (?:.*))?
-     ```
+  2.  I (?:click|navigate):( within (?:.*))?
 
      ##### Examples:
        ```rb
@@ -75,10 +69,7 @@ Or install it yourself as:
 
 + Forms:
   + Fill:
-     1. 
-        ```rb 
-        When (?:|I )fill in the following:( within (?:.*))?
-        ```
+     1. When (?:|I )fill in the following:( within (?:.*))?
 
         ##### Examples:
          ```rb
@@ -98,44 +89,12 @@ Or install it yourself as:
          ##### Description:
            + Fills form fields identified by second column.
            + First column is optional and defines 'within block' - see docs for within
-           + Add custom (...) block for second column to define your own form fill steps
+           + Add custom (...) block for second column to define your own form fill steps in `config.fill_tag_steps_map`
              supported by default:
                (select) - uses 'I select ".." from ".."' under the hood. Check it out
 
-     2.  
-         ```rb
-         When (?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?
-         ```
 
-         ##### Examples:
-           ```rb
-            When I select "Male" from "sex" within "User data"
-           ```
-
-         ##### Description:
-           + Fills javascript-like custom selectors(inputs with blocks)
-           + Params:
-             1. value to select identifier for block with select result( see [find_node](#find_nodelocator-within-nil) ) 
-             2. field identifier ( used by [find_node](#find_nodelocator-within-nil) )
-             3. within block identifier
-     3.  
-         ```rb
-         When (?:|I )(?:select|unselect) "([^"]*)"( within (?:.*))?
-         ```
-
-         ##### Examples:
-           ```rb
-            When I select "Male" within "User data"
-           ```
-
-         ##### Description:
-           + Fills checkboxes/radio buttons
-           + Params:
-             1. identifier for block with selected select ( see [find_node](#find_nodelocator-within-nil) ) 
-     4.  
-         ```rb
-         When (?:|I )attach the file "([^"]*)" to "([^"]*)"( within (?:.*))?
-         ```
+     2.  (?:|I )attach the file "([^"]*)" to "([^"]*)"( within (?:.*))?
 
          ##### Examples:
            ```rb
@@ -146,50 +105,51 @@ Or install it yourself as:
            + Attaches given file to identified fields
            + Params:
              1. relative file name. see attach_file
-             2. file input identifier. see [find_node](#find_nodelocator-within-nil)
-             3. within block identifier. see [find_node](#find_nodelocator-within-nil)
+             2. file input identifier
+             3. within block identifier
+          + within part is optional
             
-     5.  
-         ```rb
-         When (?:|I )(?:fill|select|unselect)(select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?
-         ```
+     4.  ##### (?:|I )(?:fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?
 
          ##### Examples:
            ```rb
-            When I fill "Name" with "Peter" within "User data"
-            When I fill "Avatar" with "test.png" within "User data"
-            When I fill "Male" within "User data"
-            When I fill "sex" with "Male" within "User data"
+            When I fill "Name" with "Peter" within "User data" # input[type="text"]
+            When I fill "Avatar" with "test.png" within "User data" # input[type="file"]
+
+            When I fill "Male" within "User data" # input[type="checkbox"] || input[type="radio"]
+            When I select "Male" 
+
+            When I select "sex" with "Male" # selector
+
            ```
 
          ##### Description:
            + Tries to fill data by guessing field type from found input type(text|checkbox|radio|etc)
            + There MUST always be an input identified by identifier
+           + within part is optional
        
  + Check
-   1.  
-       ```rb
-       Then fields are filled with:( within (?:.*))?
-       ```
 
-       ##### Examples: 
-         ```rb
-           Then fields are filled with:
-             | Account Number       | 5002       |
-             | Expiry date          | 2009-11-01 |
-             | Note                 | Nice guy   |
-             | Wants Email?         | true       |
-             | Sex                  | Male       |
-             | Accept user agrement | true       |
-             | Send me letters      | false      |
-             | radio 1              | true       |
-             | Avatar               | avatar.png |
-             | Due date             | 12:35      |
-         ```
+   ##### fields are filled with:( within (?:.*))?
 
-       ##### Description:
-         + Check fields filled by 'I fill in the folllwing'
-         + Supports exact same table syntax and optional column
+   ##### Examples: 
+     ```rb
+       Then fields are filled with:
+         | Account Number       | 5002       |
+         | Expiry date          | 2009-11-01 |
+         | Note                 | Nice guy   |
+         | Wants Email?         | true       |
+         | Sex                  | Male       |
+         | Accept user agrement | true       |
+         | Send me letters      | false      |
+         | radio 1              | true       |
+         | Avatar               | avatar.png |
+         | Due date             | 12:35      |
+     ```
+
+   ##### Description:
+     + Check fields filled by 'I fill in the folllwing'
+     + Supports exact same table syntax and optional column
 
 ## Development
 

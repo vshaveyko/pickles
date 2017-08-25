@@ -57,7 +57,7 @@ end)
 #   FillIN::Select.new(label, value, within).call
 # end
 
-When /^(?:|I )(fill|select|unselect)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |type, labels, value, within|
+When /^(?:|I )(fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |type, labels, value, within|
   if type == 'select' && value.present?
     FillIN::Select.new(labels, value, within).call
   else

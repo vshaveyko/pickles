@@ -24,7 +24,7 @@ Or install it yourself as:
 
 + Navigation 
 
-  1.  I (?:click|navigate) "([^"]*)"( within (?:.*))? 
+  1.  `When I (?:click|navigate) "([^"]*)"( within (?:.*))?`
 
       ##### Examples:
       ```rb
@@ -50,26 +50,27 @@ Or install it yourself as:
       ##### Description:
         + for within checkout docs
 
-  2.  I (?:click|navigate):( within (?:.*))?
+  2.  `When I (?:click|navigate):( within (?:.*))?`
 
      ##### Examples:
-       ```rb
-       I navigate:
-         | click | My button   |
-         | hover | My span     |
-         | hover | Your span   |
-         | click | Your button |
-       ```
+     ```rb
+     When I navigate:
+       | click | My button   |
+       | hover | My span     |
+       | hover | Your span   |
+       | click | Your button |
+         
+     When I navigate: within form "User data"
+       | click | Submit   |
+     ```
 
      ##### Description:
-       + alias for previous, but accepts table as argument to allow multiple arguments.
-       + note ':' in definition
-       + for within checkout docs
-
+     + Same as previous, but allows table as argument.
+     + note ` : ` in the definition
 
 + Forms:
   + Fill:
-     1. When (?:|I )fill in the following:( within (?:.*))?
+     1. `When (?:|I )fill in the following:( within (?:.*))?`
 
         ##### Examples:
          ```rb
@@ -91,10 +92,35 @@ Or install it yourself as:
            + First column is optional and defines 'within block' - see docs for within
            + Add custom (...) block for second column to define your own form fill steps in `config.fill_tag_steps_map`
              supported by default:
-               (select) - uses 'I select ".." from ".."' under the hood. Check it out
+               (select) - uses `When I select ".." with ".."` under the hood.
+               Ex:
+               ```rb
+               class FillDatepicker
+
+                 def initialize(label, value, within)
+                   # label = 'Date of birth'
+                   @label = label
+                   # value = '23.12.1998'
+                   @value = Date.parse(value)
+                   # within = detect_node("form", "User profile", within: page)
+                   @within = within
+                 end
+                 
+                 def call
+                    # implement datepicker selecting logic
+                 end
+               end
+
+               Pickles.configure do |c|
+                 c.fill_tag_steps_map = { datepicker: FillDatepicker }
+               end
+
+               When I fill in the following:
+                 | form "User profile" | Date of birth (datepicker) | 23.12.1998 |
+               ```
 
 
-     2.  (?:|I )attach the file "([^"]*)" to "([^"]*)"( within (?:.*))?
+     2.  `When (?:|I )attach the file "([^"]*)" to "([^"]*)"( within (?:.*))?`
 
          ##### Examples:
            ```rb
@@ -104,12 +130,12 @@ Or install it yourself as:
          ##### Description:
            + Attaches given file to identified fields
            + Params:
-             1. relative file name. see attach_file
-             2. file input identifier
+             1. `features/support/attachments/` + `file_name` is used to identify file
+             2. Input identifier. see `find_input` helper for searching details
              3. within block identifier
           + within part is optional
             
-     4.  ##### (?:|I )(?:fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?
+     4.  `When (?:|I )(?:fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?`
 
          ##### Examples:
            ```rb
@@ -130,29 +156,26 @@ Or install it yourself as:
        
  + Check
 
-   ##### fields are filled with:( within (?:.*))?
+   `Then fields are filled with:( within (?:.*))?`
 
    ##### Examples: 
      ```rb
-       Then fields are filled with:
-         | Account Number       | 5002       |
-         | Expiry date          | 2009-11-01 |
-         | Note                 | Nice guy   |
-         | Wants Email?         | true       |
-         | Sex                  | Male       |
-         | Accept user agrement | true       |
-         | Send me letters      | false      |
-         | radio 1              | true       |
-         | Avatar               | avatar.png |
-         | Due date             | 12:35      |
+     Then fields are filled with:
+       | Account Number       | 5002       |
+       | Expiry date          | 2009-11-01 |
+       | Note                 | Nice guy   |
+       | Wants Email?         | true       |
+       | Sex                  | Male       |
+       | Accept user agrement | true       |
+       | Send me letters      | false      |
+       | radio 1              | true       |
+       | Avatar               | avatar.png |
+       | Due date             | 12:35      |
      ```
 
    ##### Description:
-     + Check fields filled by 'I fill in the folllwing'
+     + Check fields filled by `I fill in the folllwing`
      + Supports exact same table syntax and optional column
-
-## Development
-
 
 ## Contributing
 

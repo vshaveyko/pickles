@@ -24,7 +24,8 @@ Or install it yourself as:
 
 + Navigation 
 
-  1. ```rb  
+  1. 
+      ```rb  
       When I (?:click|navigate) "([^"]*)"( within (?:.*))? 
       ```
 
@@ -52,7 +53,8 @@ Or install it yourself as:
       ##### Description:
         + for within checkout docs
 
-  2. ```rb 
+  2. 
+     ```rb 
      I (?:click|navigate):( within (?:.*))?
      ```
 
@@ -73,7 +75,8 @@ Or install it yourself as:
 
 + Forms:
   + Fill:
-     1. ```rb 
+     1. 
+        ```rb 
         When (?:|I )fill in the following:( within (?:.*))?
         ```
 
@@ -99,7 +102,8 @@ Or install it yourself as:
              supported by default:
                (select) - uses 'I select ".." from ".."' under the hood. Check it out
 
-     2.  ```rb
+     2.  
+         ```rb
          When (?:|I ) select "([^"]*)" from "([^"]*)"( within (?:.*))?
          ```
 
@@ -114,7 +118,8 @@ Or install it yourself as:
              1. value to select identifier for block with select result( see [find_node](#find_nodelocator-within-nil) ) 
              2. field identifier ( used by [find_node](#find_nodelocator-within-nil) )
              3. within block identifier
-     3.  ```rb
+     3.  
+         ```rb
          When (?:|I )(?:select|unselect) "([^"]*)"( within (?:.*))?
          ```
 
@@ -127,7 +132,8 @@ Or install it yourself as:
            + Fills checkboxes/radio buttons
            + Params:
              1. identifier for block with selected select ( see [find_node](#find_nodelocator-within-nil) ) 
-     4.  ```rb
+     4.  
+         ```rb
          When (?:|I )attach the file "([^"]*)" to "([^"]*)"( within (?:.*))?
          ```
 
@@ -143,7 +149,8 @@ Or install it yourself as:
              2. file input identifier. see [find_node](#find_nodelocator-within-nil)
              3. within block identifier. see [find_node](#find_nodelocator-within-nil)
             
-     5.  ```rb
+     5.  
+         ```rb
          When (?:|I )(?:fill|select|unselect)(select)?(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?
          ```
 
@@ -160,7 +167,8 @@ Or install it yourself as:
            + There MUST always be an input identified by identifier
        
  + Check
-   1.  ```rb
+   1.  
+       ```rb
        Then fields are filled with:( within (?:.*))?
        ```
 

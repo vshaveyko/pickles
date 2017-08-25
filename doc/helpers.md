@@ -62,7 +62,7 @@ end
 
 #### Helpers Index:
 
-#####  Locator string: `"=Text[2]"`:
+#####  Locator string: `Ex: "=Text[2]"`:
   + 'Text' - required - text to look up by
   + '='    - optional - lookup exact text in node if given
   + '[2]'  - optional - index of element on page. If found 4 elements than 3rd will be selected - indexed from 0. 

@@ -69,7 +69,7 @@ end
 
 ##### find_node(locator, within: nil)
   
-  Find node on page by [Locator string](#locator-string-text2-)
+  Find node on page by [Locator string](#locator-string-text2)
 
   within - capybara node to limit lookup
 
@@ -77,7 +77,7 @@ end
 
 ##### find_input(locator, within: nil)
 
-  Find inputtable node on page by [Locator string](#locator-string-text2-)
+  Find inputtable node on page by [Locator string](#locator-string-text2)
 
   inputtable means: `input | textarea | [contenteditable]`
 
@@ -91,7 +91,7 @@ end
   Use el_alias to find needed xpath / css in maps provided to config.
   Priority xpath_map => css_map => el_alias as it is
 
-  locator and el_alias can use index configuration from [Locator string](#locator-string-text2-)
+  locator and el_alias can use index configuration from [Locator string](#locator-string-text2)
 
 ##### wait_for_ajax
   

@@ -108,9 +108,7 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
 
 + #### find_input(locator, within: nil)
 
-  Find inputtable node on page by [Locator string](#locator-string-text2)
-
-  inputtable means: `input | textarea | [contenteditable]`
+  Find `input | textarea | [contenteditable]` on page identified by [Locator string](#locator-string-text2)
 
 + #### detect_node(el_alias, locator = nil, within: nil)
 

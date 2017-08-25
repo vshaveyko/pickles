@@ -82,24 +82,23 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
  Pickles.helper_name
  ```
 
-#### Index:
+### Index:
 
-+ [wait_for_ajax](#wait_for_ajax)
+1. [wait_for_ajax](#wait_for_ajax)
+2. [Locator string](#locator-string-text2)
+3. [find_node](#find_nodelocator-within-nil)
+4. [detect_node](#detect_nodeel_alias-locator--nil-within-nil)
+5. [find_input](#find_inputlocator-within-nil)
+6. [blur](#blurnode)
+7. [select_input](#select_inputinput-value--nil)
+8. [attach_file](#attach_fileinput-file_name)
 
-+ [Locator string](#locator-string-text2)
-+ [find_node](#find_nodelocator-within-nil)
-+ [detect_node](#detect_nodeel_alias-locator--nil-within-nil)
-+ [find_input](#find_inputlocator-within-nil)
-+ [blur](#blurnode)
-+ [select_input](#select_inputinput-value--nil)
-+ [attach_file](#attach_fileinput-file_name)
-
-#####  Locator string: `Ex: "=Text[2]"`:
++ ####  Locator string: `Ex: "=Text[2]"`:
   + 'Text' - required - text to look up by
   + '='    - optional - lookup exact text in node if given
   + '[2]'  - optional - index of element on page. If found 4 elements than 3rd will be selected - indexed from 0. 
 
-##### find_node(locator, within: nil)
++ #### find_node(locator, within: nil)
   
   Find node on page by [Locator string](#locator-string-text2)
 
@@ -107,13 +106,13 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
 
   returns: capybara node
 
-##### find_input(locator, within: nil)
++ #### find_input(locator, within: nil)
 
   Find inputtable node on page by [Locator string](#locator-string-text2)
 
   inputtable means: `input | textarea | [contenteditable]`
 
-##### detect_node(el_alias, locator = nil, within: nil)
++ #### detect_node(el_alias, locator = nil, within: nil)
 
   Does lookup based on provided in config maps
 
@@ -125,22 +124,22 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
 
   locator and el_alias can use index configuration from [Locator string](#locator-string-text2)
 
-##### wait_for_ajax
++ #### wait_for_ajax
   
   Waits for ajax requests to end before proceeding further.
   Terminated with `Capybara::ElementNotFound` after `Capybara.default_wait_time` seconds
 
-##### blur(node)
++ #### blur(node)
   
   Triggers *node* blur event and clicks on body to perform blur
 
-##### select_input(input, value = nil)
++ #### select_input(input, value = nil)
 
   Selects *input*[type="checkbox"] OR *input*[type="radio"] on form
 
   Triggers click after selection to trigger javascript events ( may change in future )
 
-##### attach_file(input, file_name)
++ #### attach_file(input, file_name)
 
   Attaches file with *file_name* to *input*[type="file"]
 

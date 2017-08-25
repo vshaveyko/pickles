@@ -50,12 +50,12 @@ Pickles.configure do |c|
   # 
   # See 'I fill in the following:' for explaination
   #
-  c.fill_tag_steps_map = { 'select' => Select } # see 'I fill in the following' step
+  c.fill_tag_steps_map = { 'select' => Select }
 
   #
   # Same as above for 'fields are filled with:' step
   #
-  c.check_tag_steps_map = { 'text' => Text } # see 'fields are filled with' step
+  c.check_tag_steps_map = { 'text' => Text }
 
 end
 ```

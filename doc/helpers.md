@@ -23,11 +23,40 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
 
 ```rb
 Pickles.configure do |c|
-  c.css_node_map = {} # map used in detect_node
-  c.xpath_node_map = {} # map used in detect_node
-  c.log_xhr_response = false # whether to log xhr error response to console, configure output to cucumber console to get the error message
+
+  #
+  # Usually referring to elements on page as .some-css-class is a bad practice.
+  #
+  # You can provide a map with aliases pointing to that stuff in this config 
+  #   Ex: c.css_node_map = { some_block: '.some-css-class' }
+  #
+  # And refer to it across within blocks in every predefined step or by manually using detect_node_helper
+  # 
+  c.css_node_map = {} 
+  # Same as above but shouled be aliased to xpath selector
+  c.xpath_node_map = {} 
+
+  #
+  # Log xhr error response to browser console, 
+  # 
+  # You can configure capybara to log this to your console: ( For example if example failed )
+  #
+  # puts page.driver.browser.manage.logs.get('browser').select { |log| log.level == 'SEVERE' }.map(&:message).map(&:red)
+  #
+  c.log_xhr_response = false 
+  
+  # 
+  # In some table steps you can provide '(...)' identifier to override how that step should be handled
+  # 
+  # See 'I fill in the following:' for explaination
+  #
   c.fill_tag_steps_map = { 'select' => Select } # see 'I fill in the following' step
+
+  #
+  # Same as above for 'fields are filled with:' step
+  #
   c.check_tag_steps_map = { 'text' => Text } # see 'fields are filled with' step
+
 end
 ```
 

@@ -12,7 +12,7 @@ module Pickles::StepDef
   module_function
 
   def define_table_step(allowed_table_cols)
-    -> do |within, table|
+    -> ( within, table ) do
 
       Waiter.wait_for_ajax
 

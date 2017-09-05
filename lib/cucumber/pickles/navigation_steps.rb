@@ -16,14 +16,14 @@ def wait_flags(text)
   [js_wait, text, ajax_wait]
 end
 
-def trigger(text, event, within_block)
+def trigger(text, event, within)
 
   js_wait, text, ajax_wait = wait_flags(text)
 
   if js_wait
-    Pickles.syncronize { Pickles.find_node(text, within: within_block).public_send(event) }
+    Waiter.wait { Pickles.find_node(text, within: within).public_send(event) }
   else
-    Pickles.find_node(text, within: within_block).public_send(event)
+    Pickles.find_node(text, within: within).public_send(event)
   end
 
   Waiter.wait_for_ajax if ajax_wait
@@ -42,18 +42,17 @@ end
 #
 # When I click ">Mo>" - both of the above
 #
-# When I click "My button,=Mo" - chain clicks ( click My button then click exact Mo )
 # When I click "My button->=Mo" - same as above (-> is for chaining sequential clicks)
 #
 # When I click "My button>->=Mo>" - click My button, ajax wait then click Mo
 #
 # etc.
 #
-When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within_block|
-  click_text.split(/,|->/).each do |text|
+When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within|
+  click_text.split(/->/).each do |text|
     pry binding if text['pry']
 
-    trigger(text, 'click', within_block)
+    trigger(text, 'click', within)
   end
 
   Waiter.wait_for_ajax
@@ -66,12 +65,12 @@ end
 #   | hover | Your span   |
 #   | click | Your button |
 #
-When /^I (?:click|navigate):( within (?:.*))?$/ do |within_block, table|
+When /^I (?:click|navigate):( within (?:.*))?$/ do |within, table|
   do_click = -> (event, text) do
     pry binding if text['pry']
     event = 'click' if event.strip.blank?
 
-    trigger(text, event, within_block)
+    trigger(text, event, within)
   end
 
   case table.headers.length

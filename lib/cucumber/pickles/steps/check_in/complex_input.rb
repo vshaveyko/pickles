@@ -8,7 +8,7 @@ class CheckIn::ComplexInput
 
   def call
     @value.split(/\s*:\s*/).each.with_index do |value, index|
-      input_locator = "#{label}[#{index}]"
+      input_locator = "#{@label}[#{index}]"
 
       CheckIn::Input.new(input_locator, value, @within_block)
     end

@@ -58,7 +58,7 @@ module NodeFinders
     else
       _rescued_find(search_params, locator || el_alias, within: within, message: "Detecting by #{xpath || css}") do
         raise Capybara::ElementNotFound,
-              "Unable to detect node by locator #{locator}",
+              "Unable to detect node by locator #{css || xpath} #{locator}",
               caller
       end
     end

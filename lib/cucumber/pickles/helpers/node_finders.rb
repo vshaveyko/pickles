@@ -46,11 +46,11 @@ module NodeFinders
     if xpath = Pickles.config.xpath_node_map[el_alias]
       xpath = xpath.respond_to?(:call) ? xpath.call(locator) : xpath
 
-      search_params = [:xpath, xpath, wait: 0]
+      search_params = [:xpath, xpath, wait: 0, visible: false]
     elsif css = Pickles.config.css_node_map[el_alias] || el_alias
       css = css.respond_to?(:call) ? css.call(locator) : css
 
-      search_params = [:css, css, text: locator, wait: 0]
+      search_params = [:css, css, text: locator, wait: 0, visible: false]
     end
 
     if index

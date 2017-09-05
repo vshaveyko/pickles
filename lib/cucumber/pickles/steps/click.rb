@@ -50,6 +50,8 @@ end
 # etc.
 #
 When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within|
+  Waiter.wait_for_ajax
+
   click_text.split(/,|->/).each do |text|
     pry binding if text['pry']
 

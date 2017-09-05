@@ -42,7 +42,6 @@ end
 #
 # When I click ">Mo>" - both of the above
 #
-# When I click "My button,=Mo" - chain clicks ( click My button then click exact Mo )
 # When I click "My button->=Mo" - same as above (-> is for chaining sequential clicks)
 #
 # When I click "My button>->=Mo>" - click My button, ajax wait then click Mo
@@ -50,7 +49,7 @@ end
 # etc.
 #
 When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within|
-  click_text.split(/,|->/).each do |text|
+  click_text.split(/->/).each do |text|
     pry binding if text['pry']
 
     trigger(text, 'click', within)

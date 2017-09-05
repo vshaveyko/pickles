@@ -29,13 +29,13 @@ class Pickles::Config
   def css_node_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @css_node_map = map.symbolize_keys
+    @css_node_map = map.stringify_keys
   end
 
   def xpath_node_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @xpath_node_map = map.symbolize_keys
+    @xpath_node_map = map.stringify_keys
   end
 
   def fill_tag_steps_map=(map)

@@ -41,7 +41,7 @@ module NodeFinders
       el_alias, index = Locator::Index.execute(el_alias.to_s)
     end
 
-    el_alias = el_alias.to_sym
+    el_alias = el_alias.to_s
 
     if xpath = Pickles.config.xpath_node_map[el_alias]
       xpath = xpath.respond_to?(:call) ? xpath.call(locator) : xpath

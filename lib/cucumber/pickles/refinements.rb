@@ -1,3 +1,19 @@
+module HashStringifyKeys
+
+  refine Hash do
+    def stringify_keys
+      res = {}
+
+      each_key do |key|
+        res[key.to_s] = self[key]
+      end
+
+      res
+    end
+  end
+
+end
+
 module HashSymbolizeKeys
 
   refine Hash do

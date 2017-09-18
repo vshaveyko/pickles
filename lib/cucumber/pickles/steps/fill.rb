@@ -15,7 +15,7 @@
 When(/^(?:|I )fill in the following:( within (?:.*))?$/,
      &Pickles::StepDef.define_table_step([2, 3]) do |label, value, within|
 
-  FillIN::Factory.new(label, value, within: current_within).call.call
+  FillIN::Factory.new(label, value, within: within).call.call
 
 end)
 

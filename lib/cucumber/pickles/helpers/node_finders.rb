@@ -76,7 +76,6 @@ module NodeFinders
   #
   def find_input(input_locator, within: nil, options: {})
     within ||= Capybara.current_session
-    options[:wait] = 0
     options[:visible] = false
 
     locator, index = Locator::Index.execute(input_locator)

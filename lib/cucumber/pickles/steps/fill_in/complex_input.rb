@@ -2,9 +2,11 @@ class FillIN::ComplexInput
 
   include Pickles
 
+  attr_reader :value, :label
+
   def initialize(label, value, within)
-    @label = label
-    @value = value
+    @label  = label
+    @value  = value
     @within = within || Capybara.current_session
   end
 

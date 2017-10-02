@@ -78,7 +78,8 @@ module NodeFinders
     within ||= Capybara.current_session
     options[:visible] = false
 
-    locator, index = Locator::Index.execute(input_locator)
+    locator, index       = Locator::Index.execute(input_locator)
+    locator, label_xpath = Locator::Equal.execute(locator)
 
     if index
       index_xpath = "[#{index}]"
@@ -88,8 +89,6 @@ module NodeFinders
 
     # case 3
     _rescued_find([:xpath, xpath, options], locator, within: within, message: "@contenteditable with placeholder = #{locator}") do
-
-      locator, label_xpath = Locator::Equal.execute(input_locator)
 
       inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
 

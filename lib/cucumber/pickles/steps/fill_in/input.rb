@@ -1,5 +1,7 @@
 class FillIN::Input
 
+  attr_reader :label, :value
+
   def initialize(label, value, within)
     @label = label
     @value = value

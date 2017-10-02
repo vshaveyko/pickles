@@ -14,7 +14,7 @@ end
 
 class Pickles::Config
 
-  using HashSymbolizeKeys
+  using HashStringifyKeys
 
   attr_accessor :css_node_map, :xpath_node_map, :log_xhr_response
 

@@ -16,6 +16,7 @@ RSpec.describe '#Waiter' do
     @session.evaluate_script(
       <<~JS
         new XMLHttpRequest().open("GET", '')
+        new XMLHttpRequest().send()
       JS
     )
 

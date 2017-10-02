@@ -92,21 +92,28 @@ module NodeFinders
 
       inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
 
-      xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath}][position()=1]//#{inputtable_field_xpath}"
+      xpath = "(#{label_xpath}/ancestor::*[.//#{inputtable_field_xpath}][position()=1]//#{inputtable_field_xpath})#{index_xpath}"
 
-      # case 1
-      _rescued_find([:xpath, xpath, options], locator, within: within, message: "find_node(#{locator}) => look for closest fillable field") do
+      _rescued_find([:xpath, xpath, options], locator, within: within, message: "find_node(#{locator}) => look for closest fillable field, index by input") do
 
-        # case 2
-        _rescued_find([:fillable_field, locator, options], locator, within: within, message: 'Capybara#fillable_input') do
+        inputtable_field_xpath = "*[self::input or self::textarea or @contenteditable]"
 
-          # all cases failed => raise
-          raise Capybara::ElementNotFound,
-                "Unable to find fillable field by locator #{locator}",
-                caller
+        xpath = "(#{label_xpath})#{index_xpath}/ancestor::*[.//#{inputtable_field_xpath}][position()=1]//#{inputtable_field_xpath}"
+
+        # case 1
+        _rescued_find([:xpath, xpath, options], locator, within: within, message: "find_node(#{locator}) => look for closest fillable field, index by label") do
+
+          # case 2
+          _rescued_find([:fillable_field, locator, options], locator, within: within, message: 'Capybara#fillable_input') do
+
+            # all cases failed => raise
+            raise Capybara::ElementNotFound,
+                                             "Unable to find fillable field by locator #{locator}",
+                                             caller
+
+          end
 
         end
-
       end
 
     end

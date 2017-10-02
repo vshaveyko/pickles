@@ -50,6 +50,9 @@
 #   end
 # end
 
+#
+# XMLHttpRequest.prototype.open broken in Angular2 + zone.js => have to redefine XMLHttpRequest.prototype.send
+#
 def stub_xml_http_request(page)
   page.evaluate_script <<-JAVASCRIPT
     (function() {
@@ -57,9 +60,9 @@ def stub_xml_http_request(page)
       if (window.ajaxRequestIsSet) { return; };
       window.ajaxRequestIsSet = true;
 
-      var oldOpen = XMLHttpRequest.prototype.open;
+      var oldSend = XMLHttpRequest.prototype.send;
       window.activeRequests =  0;
-      XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+      XMLHttpRequest.prototype.send = function(method, url, async, user, pass) {
         window.activeRequests++;
         this.addEventListener("readystatechange", function() {
             if (this.readyState == 4) {
@@ -79,9 +82,8 @@ def stub_xml_http_request(page)
 
             }
           }, false);
-        oldOpen.call(this, method, url, async, user, pass);
+        oldSend.call(this, method, url, async, user, pass);
       };
-
 
       var style = document.createElement('style');
       style.type = 'text/css';
@@ -146,6 +148,10 @@ module Waiter
   end
 
   def pending_ajax_requests_num
+    req_num = page.evaluate_script("window.activeRequests")
+    return req_num if req_num
+
+    stub_xml_http_request(page)
     page.evaluate_script("window.activeRequests")
   end
 

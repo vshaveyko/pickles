@@ -1,4 +1,38 @@
 # Pickles
+<details>
+  <summary> Available steps summary </summary>
+
+  ```rb
+   When I click "My button" 
+   When I click "=Mo" 
+   When I click ">Mo" 
+   When I navigate:
+     | click | My button   |
+     | hover | My span     |
+
+   When I fill in the following:
+     | User data       | Sex         (select) | Male       |
+     |                 | Avatar               | avatar.png |
+
+   When I attach the file "test.png" to "Avatar" within "User data"
+   When I fill "Name" with "Peter" within "User data" 
+   When I fill "Avatar" with "test.png" within "User data" 
+
+   Then fields are filled with:
+     | Account Number       | 5002       |
+     | Expiry date          | 2009-11-01 |
+
+   Then I can see:
+     | form                       | Sarah |
+     | menu_item "profile change" | admin |
+
+   Then I can see video "cool_stuff"
+   Then I cannot see image "test.png"
+   Then focus is on "Sample"
+   Then focus is on form_field "Fill user data"
+   ```
+
+</details>
 
 This gem contains some helpers to simplify testing with capybara along with afew predefined cucumber steps.
 
@@ -301,47 +335,45 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
      + Supports exact same table syntax and optional column
 
    `Then I can(not)? see:`
-     ##### Examples: 
-       ```rb
-       Then fields are filled with:
-         | form                       | Sarah |
-         | menu_item "profile change" | admin |
-       ```
-     ##### Description:
-       + First column is optional for identifying within blocks
+   ##### Examples: 
+     ```rb
+     Then I can see:
+       | form                       | Sarah |
+       | menu_item "profile change" | admin |
+     ```
+   ##### Description:
+     + First column is optional for identifying within blocks
 
    `Then I can(not)? see video (".*?")( within (?:.*))?`
 
-     ##### Examples: 
-       ```rb
-       Then I can see video "cool_stuff"
-       ```
+   ##### Examples: 
+     ```rb
+     Then I can see video "cool_stuff"
+     ```
 
-     ##### Description:
-       + value is src link to the video ( i.e. youtube link )
+   ##### Description:
+     + value is src link to the video ( i.e. youtube link )
 
    `Then I can(not)? see image (".*?")( within (?:.*))?`
 
-     ##### Examples: 
-       ```rb
-       Then I cannot see image "test.png"
-       ```
+   ##### Examples: 
+     ```rb
+     Then I cannot see image "test.png"
+     ```
 
-     ##### Description:
-       + value is image_url ( i.e. assets/images/first.png )
+   ##### Description:
+     + value is image_url ( i.e. assets/images/first.png )
 
    `Then focus is on (.*) ?"(.*?)"`
 
-     ##### Examples: 
-       ```rb
-       Then focus is on "Sample"
-       Then focus is on form_field "Fill user data"
-       ```
+   ##### Examples: 
+     ```rb
+     Then focus is on "Sample"
+     Then focus is on form_field "Fill user data"
+     ```
 
-     ##### Description:
-       + first matching group is optional and used from node maps ( see #detect_node )
-
-
+   ##### Description:
+     + first matching group is optional and used from node maps ( see #detect_node )
 
 ## Contributing
 

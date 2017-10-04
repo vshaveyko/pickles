@@ -41,13 +41,13 @@ class Pickles::Config
   def fill_tag_steps_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @fill_tag_steps_map.merge!(map)
+    @fill_tag_steps_map.merge!(map.stringify_keys)
   end
 
   def check_tag_steps_map=(map)
     raise(ArgumentError, "Node map must be a hash") unless map.is_a?(Hash)
 
-    @check_tag_steps_map.merge!(map)
+    @check_tag_steps_map.merge!(map.stringify_keys)
   end
 
   def step_by_tag(tag)

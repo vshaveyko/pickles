@@ -300,6 +300,33 @@ Mostly usefull if you're building a SPA app or just have tons of javascript and 
      + Check fields filled by `I fill in the folllwing`
      + Supports exact same table syntax and optional column
 
+   `Then I can(not)? see:`
+     ##### Examples: 
+       ```rb
+       Then fields are filled with:
+         | form                       | Sarah |
+         | menu_item "profile change" | admin |
+       ```
+     ##### Description:
+       + First column is optional for identifying within blocks
+
+   `Then I can(not)? see video (".*?")( within (?:.*))?`
+     ##### Examples: 
+       ```rb
+       Then I can see video "cool_stuff"
+       ```
+     ##### Description:
+       + value is src link to the video ( i.e. youtube link )
+
+   `Then I can(not)? see image (".*?")( within (?:.*))?`
+     ##### Examples: 
+       ```rb
+       Then I cannot see image "test.png"
+       ```
+     ##### Description:
+       + value is image_url ( i.e. assets/images/first.png )
+
+
 ## Contributing
 
      Bug reports and pull requests are welcome on GitHub at https://github.com/vshaveyko/pickles.

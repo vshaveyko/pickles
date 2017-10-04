@@ -17,8 +17,8 @@ class FillIN::Factory
       step = FillIN::ComplexInput
     elsif @label =~ TAG
       @label = $1
-      tag = $2
-      step = Pickles.config.step_by_tag(tag) || FillIN::Input
+      tag    = $2
+      step   = Pickles.config.step_by_tag(tag) || FillIN::Input
     else
       step = FillIN::Input
     end

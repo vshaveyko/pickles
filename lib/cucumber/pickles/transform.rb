@@ -1,6 +1,6 @@
 within_reg = /\A\s*(.*)?\s*(?:["|'](.*?)["|'])?\s*\Z/
 
-Transform(/(within .*)$/) do |within_info|
+transformation = -> do |within_info|
   splitted = within_info.split('within').reject(&:blank?)
 
 
@@ -15,4 +15,16 @@ Transform(/(within .*)$/) do |within_info|
 
     within
   end
+end
+
+transform_regex = /(within .*)$/
+
+if defined?(Transform)
+  Transform(transform_regex, &transformation)
+elsif defined?(ParameterType)
+  ParameterType(
+    name: 'within',
+    regexp: transform_regex
+    transformer: transformation
+  )
 end

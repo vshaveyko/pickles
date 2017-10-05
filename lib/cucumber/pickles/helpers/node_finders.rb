@@ -76,10 +76,13 @@ module NodeFinders
   #
   def find_input(input_locator, within: nil, options: {})
     within ||= Capybara.current_session
-    options[:visible] = false
 
     locator, index       = Locator::Index.execute(input_locator)
+    locator, wait        = Locator::Wait.execute(locator)
     locator, label_xpath = Locator::Equal.execute(locator)
+
+    options[:visible] = false
+    options[:wait]    = wait if wait
 
     if index
       index_xpath = "[#{index}]"

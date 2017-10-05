@@ -20,6 +20,7 @@ module Locator
 
   autoload :Index, _dir + 'index'
   autoload :Equal, _dir + 'equal'
+  autoload :Wait,  _dir + 'wait'
 
 end
 

@@ -58,6 +58,8 @@ end)
 # end
 
 When /^(?:|I )(fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$/ do |type, labels, value, within|
+  Waiter.wait_for_ajax
+
   if type == 'select' && value.present?
     FillIN::Select.new(labels, value, within).call
   else

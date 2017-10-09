@@ -65,6 +65,31 @@ module NodeFinders
   end
 
   #
+  # try to guess which of the above 2 methods should be used
+  #
+  def guess_node(within_string, within: nil)
+    is_find_node_case = within_string[0] == "\"" && within_string[-1] == "\""
+
+    match = Helpers::Regex::WITHIN.match(within_string)
+    is_detect_node_case = !match.nil?
+
+    if is_detect_node_case
+      captures = match.captures
+      el_alias = captures[0]
+      locator = captures[1]
+
+      detect_node(el_alias, locator, within: within)
+    elsif is_find_node_case
+      within_string[0]  = ''
+      within_string[-1] = ''
+
+      find_node(within_string, within: within)
+    else
+      fail "Incorrect within def"
+    end
+  end
+
+  #
   # Similar to find_node, but looking for fillable fields for this cases:
   #  1. label or span(as label) with input hint for input || textarea || @contenteditable
   #  2. capybara lookup by label || plcaeholder || id || name || etc

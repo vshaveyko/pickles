@@ -1,8 +1,5 @@
-within_reg = /\A\s*(.*)?\s*(?:["|'](.*?)["|'])?\s*\Z/
-
 transformation = -> (within_info) do
   splitted = within_info.split('within').reject(&:blank?)
-
 
   splitted.reverse_each.inject(page) do |within, info|
     captures = Helpers::Regex::WITHIN.match(info).captures

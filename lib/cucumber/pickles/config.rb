@@ -22,7 +22,7 @@ class Pickles::Config
     @css_node_map = {}
     @log_xhr_response = false
     @xpath_node_map = {}
-    @fill_tag_steps_map = { 'select' => FillIN::Select }
+    @fill_tag_steps_map = { 'select' => FillIN::Select, 'jselect' => FillIN::JsSelect }
     @check_tag_steps_map = { 'text' => CheckIn::Text }
   end
 

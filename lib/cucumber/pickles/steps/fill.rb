@@ -61,7 +61,11 @@ When /^(?:|I )(fill|select)(?: "([^"]*)")?(?: with "([^"]*)")?( within (?:.*))?$
   Waiter.wait_for_ajax
 
   if type == 'select' && value.present?
-    FillIN::Select.new(labels, value, within).call
+    begin
+      FillIN::Select.new(labels, value, within).call
+    rescue Capybara::ElementNotFound
+      FillIN::JsSelect.new(labels, value, within).call
+    end
   else
     labels.split(/\s*\|\s*/).each do |label|
       FillIN::Factory.new(label, value, within: within).call.call

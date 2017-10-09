@@ -1,3 +1,7 @@
+# When /^select "(.*)" from "(.*)"$/ do |value, label|
+#   select value, from: label
+# end
+
 class FillIN::Select
 
   def initialize(label, value, within)
@@ -7,20 +11,12 @@ class FillIN::Select
   end
 
   def call
-    input = FillIN::Input.new(@label, @value, @within).call
+    locator, wait = Locator::Wait.execute(@label)
 
-    text, selector = NodeTextLookup.lookup_values(value)
-    item_xpath = selector.(text)
+    options = { from: locator }
+    options[:wait] = wait if wait
 
-    Waiter.wait do
-      input.find(:xpath, "./ancestor::*[#{item_xpath}][1]/#{item_xpath}").click
-    end
-
-    Pickles.blur(input)
-
-    Waiter.wait_for_ajax
-
-    input
+    @within.select @value, options
   end
 
   private

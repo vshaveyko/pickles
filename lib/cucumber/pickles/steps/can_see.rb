@@ -5,16 +5,18 @@
 #   | .note          | Nice guy   |
 #
 
-Then(/^I can(not)? see:$/) do |is_not, table|
+Then(/^I can(not)? see:( within (?:.*))?$/) do |is_not, within_block, table|
+  within_block ||= page
+
   if is_not
     check = -> within, content {
-      within = within.strip.present? ? find_node(within) : page
+      within = within.strip.present? ? Pickles.guess_node(within, within: within_block) : within_block
 
       expect(within).not_to have_content(content)
     }
   else
     check = -> within, content {
-      within = within.strip.present? ? find_node(within) : page
+      within = within.strip.present? ? Pickles.guess_node(within, within: within_block) : within_block
 
       expect(within).to have_content(content)
     }

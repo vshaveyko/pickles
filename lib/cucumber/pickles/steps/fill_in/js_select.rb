@@ -7,15 +7,16 @@ class FillIN::JsSelect
   end
 
   def call
-    input = FillIN::Input.new(@label, @value, @within).call
-
     locator, index = Locator::Index.execute(@value)
     locator, xpath = Locator::Equal.execute(locator)
 
     index ||= 1
 
+    input = FillIN::Input.new(@label, locator, @within).call
+
     Waiter.wait do
-      input.find(:xpath, "./ancestor::*[#{xpath}][#{index}]/#{xpath}").click
+      # prev version "(./ancestor::*[#{xpath}][#{index}]/#{xpath})[#{index}]"
+      input.find(:xpath, "(./ancestor::*[#{xpath}]/#{xpath})[#{index}]").click
     end
 
     Pickles.blur(input)

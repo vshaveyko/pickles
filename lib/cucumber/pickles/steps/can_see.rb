@@ -22,6 +22,8 @@ Then(/^I can(not)? see:( within (?:.*))?$/) do |is_not, within_block, table|
     }
   end
 
+  Waiter.wait_for_ajax
+
   case table.headers.length
   when 1
     check = check.curry['']

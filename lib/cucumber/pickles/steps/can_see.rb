@@ -38,21 +38,11 @@ Then(/^I can(not)? see:( within (?:.*))?$/) do |is_not, within_block, table|
 end
 
 And(/^I can(not)? see video (".*?")( within (?:.*))?$/) do |is_not, video_src, within|
-  within ||= page
-  if is_not
-    expect(within).not_to have_selector("iframe[src=#{video_src}]")
-  else
-    expect(within).to have_selector("iframe[src=#{video_src}]")
-  end
+  CheckIn::Video.new(video_src, within).call(is_not)
 end
 
 And(/^I can(not)? see image (".*?")( within (?:.*))?$/) do |is_not, image_src, within|
-  within ||= page
-  if is_not
-    expect(within).not_to have_selector("img[src=#{image_src}]")
-  else
-    expect(within).to have_selector("img[src=#{image_src}]")
-  end
+  CheckIn::Image.new(image_src, within).call(is_not)
 end
 
 Then /^focus is on (.*) ?"(.*?)"$/ do |identifier, locator|

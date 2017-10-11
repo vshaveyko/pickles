@@ -11,7 +11,8 @@ class FillIN::Select
   end
 
   def call
-    locator, wait = Locator::Wait.execute(@label)
+    locator, wait  = Locator::Wait.execute(@label)
+    locator, index = Locator::Index.execute(locator)
 
     options = { from: locator }
     options[:wait] = wait if wait

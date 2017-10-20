@@ -1,32 +1,22 @@
-def wait_flags(text)
-  if text.starts_with?('>')
-    text = text[1..-1]
-
-    Waiter.wait_for_ajax
-
-    js_wait = true
-  end
-
-  if text.ends_with?('>')
-    text = text.chomp('>')
-
-    ajax_wait = true
-  end
-
-  [js_wait, text, ajax_wait]
-end
-
 def trigger(text, event, within)
 
-  js_wait, text, ajax_wait = wait_flags(text)
+  locator, wait_time = Locator::Wait.execute(text)
 
-  if js_wait
-    Waiter.wait { Pickles.find_node(text, within: within).public_send(event) }
+  if wait_time.nil? || wait_time > 0
+    Waiter.wait do
+      Pickles.trigger(
+        Pickles.find_node(text, within: within),
+        event
+      )
+    end
   else
-    Pickles.find_node(text, within: within).public_send(event)
+    Pickles.trigger(
+      Pickles.find_node(text, within: within),
+      event
+    )
   end
 
-  Waiter.wait_for_ajax if ajax_wait
+  Waiter.wait_for_ajax
 
 end
 
@@ -53,8 +43,6 @@ When /^I (?:click|navigate) "([^"]*)"( within (?:.*))?$/ do |click_text, within|
   Waiter.wait_for_ajax
 
   click_text.split(/,|->/).each do |text|
-    pry binding if text['pry']
-
     trigger(text, 'click', within)
   end
 
@@ -70,7 +58,6 @@ end
 #
 When /^I (?:click|navigate):( within (?:.*))?$/ do |within, table|
   do_click = -> (event, text) do
-    pry binding if text['pry']
     event = 'click' if event.strip.blank?
 
     trigger(text, event, within)

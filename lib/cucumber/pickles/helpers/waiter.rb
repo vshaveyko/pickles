@@ -124,12 +124,12 @@ module Waiter
 
   module_function
 
-  def wait
+  def wait(errors = [Capybara::ElementNotFound])
     wait_for_ajax
 
     return unless block_given?
 
-    page.document.synchronize do
+    page.document.synchronize(Capybara.default_max_wait_time, errors: errors) do
       yield
     end
   end

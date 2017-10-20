@@ -13,14 +13,21 @@ module NodeFinders
   def find_node(locator, within: nil)
     within ||= Capybara.current_session
 
+    options = { visible: false }
+
     locator, index = Locator::Index.execute(locator)
+    locator, wait  = Locator::Wait.execute(locator)
     locator, xpath = Locator::Equal.execute(locator)
 
     if index
       xpath = "(#{xpath})[#{index}]"
     end
 
-    _rescued_find([:xpath, xpath, wait: 0, visible: false], locator, within: within, message: "find_node") do
+    if wait
+      options[:wait] = wait
+    end
+
+    _rescued_find([:xpath, xpath, options], locator, within: within, message: "find_node") do
       raise Capybara::ElementNotFound,
             "Unable to find node by locator #{locator}",
             caller

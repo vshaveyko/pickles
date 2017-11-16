@@ -139,7 +139,7 @@ module NodeFinders
         _rescued_find([:xpath, xpath, options], locator, within: within, message: "find_node(#{locator}) => look for closest fillable field, index by label") do
 
           # case 2
-          _rescued_find([:fillable_field, locator, options], locator, within: within, message: 'Capybara#fillable_input') do
+          _rescued_find([:fillable_field, locator, options], locator, index: index, within: within, message: 'Capybara#fillable_input') do
 
             # all cases failed => raise
             raise Capybara::ElementNotFound,
@@ -154,8 +154,12 @@ module NodeFinders
     end
   end
 
-  def _rescued_find(params, locator, within:, message:)
-    within.find(*params)
+  def _rescued_find(params, locator, within:, message:, index: nil)
+    if index
+      within.all(*params)[index - 1]
+    else
+      within.find(*params)
+    end
   rescue Capybara::Ambiguous => err # Capybara::Ambiguous < Capybara::ElementNotFound == true
     raise Pickles::Ambiguous.new(locator, within, params, message), nil, caller
   rescue Capybara::ElementNotFound
